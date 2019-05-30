@@ -1,1 +1,31 @@
-These are some notes
+These are some notes from research in git and messing around
+
+
+Using git:
+
+git add <file or directory wanted>
+    In visual studio: >Git: Stage (when file is opened)
+        for staging all changes:
+            In visual studio >Git: Stage All changes
+            In Bash: git add -a
+    temporarily holds the files currently looked at by editor or near ls of terminal
+
+
+git commit -m ""
+    In Visual Studio: >Git: Commit
+    prepares updates to file for repo upload and can notify the github site of this it appears
+
+git push
+    In visual studio: >Git: Push
+    Appears to apply changes to repo on website if able, sometimes an argument of the repo used is required in command line
+    Can sometimes need the remote url if connection not established it seems
+
+git pull <url>
+    In Visual Studio: >Git: Pull
+        Visual studio appears to assume current file is pulled to
+    Appears to merge from remote to current ls location
+
+git fetch <url>
+    In Visual Studio: >Git: fetch
+        In VS temporarily opens current version of file
+        In command line, appears to produce a copy of the current file pulled at ls location or specified path
