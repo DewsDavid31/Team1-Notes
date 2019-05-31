@@ -3,6 +3,7 @@ These are some notes from research in git and messing around
 
 Using git:
 
+
 git add <file or directory wanted>
     In visual studio: >Git: Stage (when file is opened)
         for staging all changes:
