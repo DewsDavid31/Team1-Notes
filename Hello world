@@ -32,3 +32,41 @@ git fetch <url>
     In Visual Studio: >Git: fetch
         In VS temporarily opens current version of file
         In command line, appears to produce a copy of the current file pulled at ls location or specified path
+
+Our Source Code, pre-adjustments:
+Types file: contains all the objects required for project
+    Item class:
+        items are stubbed currently, containing no code inside
+    Holder class:
+        Inventory containers, currently only stubbed
+    Player:
+        Built-in Holder is given as argument
+        Currently creates a Room field without arguments
+        No other functionality
+
+    Room:
+        Room to be used on map
+        Has a parent map field, list of entrances and exits
+        Also has a list of players currently inhabiting
+        !! As a practice, entrances should only be entereed by players,while exits only 
+                only used to be exited by players
+    Path:
+        Abstractly built to be the connection between a Room's pointers, such as doors
+            Contains an entrance and exit Room
+    Map:
+        Actualy map of rooms in the game, will contain all objects later on
+            !! Currently only has a list of room objects
+
+_Init_ File: Appears to only have version tag and author tag to add to program
+
+_Main_: Appears to be the main launching file, running other programs and importing libraries
+
+cli file: According to techtarget.com, is the Command Line Interface file that deals with extra arguments added by command line when starting the program
+
+tests: The code appears to have assertion code for the existance of all object types currently existing
+        as well as multiple instance of said objects in runtime.
+        There are also tests that the CLI has a -h for help and the CLI exists in general
+        
+
+
+
