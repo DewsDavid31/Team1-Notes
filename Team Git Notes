@@ -67,6 +67,19 @@ tests: The code appears to have assertion code for the existance of all object t
         as well as multiple instance of said objects in runtime.
         There are also tests that the CLI has a -h for help and the CLI exists in general
         
+Notes on zork1:
+what I like:
+    Writing is impeccible
+    Puzzling and fun
+    Able to use many synonyms
+    Consistantly follows two word syntax
+what I dislike:
+    Has no description of syntax of commands
+    Go to says got there but does nothing
 
+what could be changed:
+    Syntax could be explained through item on person?
+    Some more synonyms could be added such as ran to or go to
+    Some elements of the game become zany like the troll eating you lantern, maybe more sensical puzzles could be made?
 
 
