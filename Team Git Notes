@@ -180,3 +180,80 @@ Issues in Usage     Observable cannot be trusted to produce data in a specific o
 
 Head-first patterns Ch 3 Decorator pattern:
     Example         A coffee shop is struggling to update its massive menu with changing costs and build-your-own format of beverages
+
+    Original setup  Superclass of Beverage, subclassing each possible combination and each beverage has a cost method   
+                        An attrocity, could cause millions upon millions of classes and cost adjustments cannot be easily applied!
+
+    Open-Closed Principle   "Classes should be open for extension, but closed to modification"
+        Allows stability, but flexible usage of code
+            Comes at the price of complexity!!
+
+    Decorator big-picture   Base object is wrapped in added object wrapped in added object and so on. To call methods, call outside wrapper, which calls inside wrapper etc. etc.
+        Lends itself to recursion in my mind
+        Requires each wrapper to be the same type as its enwrapped object!!!
+            Because it is the same type, the entire pile of wrappers can be passed around as one single object of its type!!
+
+    implementation  Components, or base objects are made with interfaces
+                        concreteComponent uses and interface of Component to then be wrapped in Decorator interface that is used by the concreteDecorator class
+                            All parts must have the same recursive function, but concreteDecorator can have as many methods as it wishes!
+    Drawbacks   Fails to function properly on component-only calculations such as end-of-sale discounts because then each layer would have to know previous layers
+                Order cannot be guaranteed without other patterns!!
+                Can produce an insane amount of small instances and may require extensive libraries with counterintutive combinations!!
+
+    Java.IO     Uses this pattern extensively with components being InputStreams and wrappers being BufferedReader and other readers
+
+5 Dysfunctions Part 1: The Fable
+    A fictional company used to be the talk-of-the-town and contains allstar workers, but has been lackluster. The Company commander-in-chief, Jeff was asked to step down
+    because of an abysmal performance recently, he is replaced by Kathyrn with much controversy.
+
+    Kathyrn-    was a previos blue-collar exec, family gal, put on team because she was seen as a successful buisness woman in manufacturing deals without much expertise at all.
+    Personal friends with chairman that appointed her. She is seen as a cultural outlier and met with controversy for commanding a culture she isn't a part of.
+
+    The staff       What the employees call themselves, probably to avoid being called a team out of distrust and dislike
+
+        Jeff        Former CEO, network guru but fails to properly manage. His meetings are bland and lifeless without a care about progress. He creates micromanaged agendas, minutes and documents of 
+        meetings but fails to produce any results.
+
+        Mikey       Marketing, a brand-building titan with a pedigree. Socially clueless and complains openly about disagreement with her choices. Often causes unneeded drama.
+
+        Martin      Chief technoloist, a professional inventor that created original specifications with many accolades. Fails to care about participation and is often distracted. Snarky toward any ignorance and learning.
+
+        JK          Another Jeff, but initilized for less confusion. Sales, more seasoned and older than most staff. Very honest and transparent but is non-commital and flakey. Used to be punctual.
+
+        Carlos      Customer support, position is only for when company grows. Quiet listener, downplays successes, very bored but no issues.
+
+        Jan         Chief Financial Officer, Devil in the details person, miserly as her position should be and prideful about her work. She is not much of a problem.
+
+        Nick        Chief Operating Officer, Most accolades. Forced himself into position as bargaining chip. Wanted to shine, but duties ground to a halt when company plummeted. Not vocal but airs superiority on others.
+
+Kathyrn proceeded to make the company uneasy by researching and observing how the staff interacted on the daily, as well as suggesting a sebatical for all workers to restart things.
+
+Effective Java Ch 1: Introduction
+
+Libraries we will use   util, io and the various contained libraries in util
+
+Rules                   each chapter and section will have a rule that professional Developers follow
+
+Pillars                 Clarity, Simplicity, User should never be surprised by an objects behavior, components should be as small as possible, never copy...reuse and dependencies should be minimized!
+
+Our book                Some sections require IO boiler-plate imports on the books website to work
+                        Will refer to inheritance as subclassing
+                        Uses extends and implements interchangably instead of interfacing
+                        Exported API will refer to classes, interfaces ,construction members and forms programmers access to define it
+
+Reference types         types such as: Interfaces, Classes and arrayList
+
+objects                 are class instances and arrays
+
+class-members           are fields, methods, members classes and member intefaces inside the class body
+
+signature               the name, types and formal parameters of a method
+
+client-API              class that uses an API
+
+Effective Java ch2: Creating and destroying objects
+
+Item 1          "Consider static factory methods over constructors!"
+                    A class can fetch an instance without invoking built-in constructors
+
+Factory methods     
