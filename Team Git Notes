@@ -133,6 +133,50 @@ Strategy patterns   Family of algorithmns that encapsulate a set of behaviors fo
 
 Chapter 2 headfirst design patterns: Observer pattern
 
+Example     A weather station needing to update a bunch of display devices on current forecast
 
+Problem     We want to maintain a link with an assortment of devices and display types without wasting code
 
+Main pattern    We encapsulate a Publisher and Subscriber model, called Subject and Observer in our cases
 
+Observers       Can subscribe or unsubscribe to updates by registering or deregistering with Subject
+
+The pieces involved     Need a ConcreteSubject class pointing to a Subject interface that can call or be called by an Observer interface pointed by a concreteObserver object
+                            This is done such that the data, and behaviors of each piece are easily changable like pattern 1
+Pros        Cleaner sharing of same data
+Cons        Can be counterintuititve in certain implementations
+
+Loose Coupling  Interaction with little publicity to each other piece
+                    Code reuse is indepenedent from Observer and Subject sides
+
+Loose Coupling Principle    "Strive for loosely coupled designs between objects that interact!"
+                                Allows objects to interact more flexibly
+
+The general paradigm
+                        Subject object deals with nitty gritty setters and getters, Subject then uses interface to call notify when changes occur in getters and setters
+                        Said notify either calls observer interface's update method, injecting new data or has observer inteface call getters and setters on sent instance 
+                        of Subject from Subject itself to later work with given information in actual concreteObserver as it wishes.
+
+Subject interface   
+                        registerObserver - takes observer as argument to add to arraylist usually
+                        removeObserver - removes observer from arrayList to no longer be notified
+                        notifyObserver - sends reference of itself and data object usually, null if nothing changed
+Observer interface      
+                        update - called using arguments specified by api to be states/data that currently changed in Subject
+
+displayElement
+                        The concreteObserver usually, could do anything since Subject doesn't know or creates
+
+Push               When the Subject is set such that data is injected into observer class
+Pull                When a Subject is set such that observers get data from passed instance of Subject
+
+Java's supported    Has built-in libraries for Observable type and Observer classes 
+                        Allows both push and pull as well as custom settings for when updates occur
+How to change updates      notify will never be called unless setChanged() is called first, allowing programmers to specify when data should be pushed or pulled
+
+Issues in Usage     Observable cannot be trusted to produce data in a specific order upon pull or push
+                     Observer is a class not an interface in java supported libraries, not flexible in implememntation
+                        setChanged() cannot be sub-classed
+
+Head-first patterns Ch 3 Decorator pattern:
+    Example         A coffee shop is struggling to update its massive menu with changing costs and build-your-own format of beverages
