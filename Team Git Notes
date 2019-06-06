@@ -256,4 +256,147 @@ Effective Java ch2: Creating and destroying objects
 Item 1          "Consider static factory methods over constructors!"
                     A class can fetch an instance without invoking built-in constructors
 
-Factory methods     
+Factory methods
+		A method that returns the reference of an instance
+			1) Is named unlike a constructor
+			2) Has overload capabilities with the same arguments
+			3) Order of args is easier
+			4) Not required to create an instance each time
+			5) Can control existance of objects to be singleton
+			6) Can return an object of any type
+			7) Can be private
+			8) Return can now be vargs
+			9) Can now return whole families of objects in a lightweight fashion
+			10) Return type can only exist at runtime if it is wished
+		ex: Enum classes work this way specifically
+	
+	Cons	1) Still needs to have a constructor to subclass
+		2) Hard for programmers to naturally discover in an API
+
+	Common names of commands
+		from	type conversion of an arg
+		of	fusing arguments into instance
+		valueOf	same as of
+		instance/getInstance	returns an instance of arg, but can change each next call
+		create 			same as instance but guaranteed a new object each time
+		getType		if factory method is called in other class
+		newType		create but called in other class
+		type		same as newType
+
+Item 2	"Consider a builder when faced with many parameters in a constructor"
+	Factory methods and constructors suck at being readable and fast with many params
+
+Traditional approach	constructors for each argument size get called from largest calling smaller
+				Called Telescopic constructor
+					Better reading than normal for variable size construction
+					but still horrible to read and adjust
+Javabeans pattern	create and argumentless constructor that calls getters and setters of member				object to create using getters as arguments.
+				Better to read, but unstable in states of each argument, hard
+				to debug!!
+				Impossible to be immutable!!
+Builder pattern		Client calls a constructor or static factory with the parameters, while
+			constructor gets member object called builder to use getters and setters on 			    arguments and then upon build method, builder makes instance of object with 			parameters.
+				Simulates the optional arguments of soft-typed optional vars
+				Requires checking valid values and states!!
+				Must check fields after copying for security!!
+				Amazing against class hierarchies! Can be nested for chaining!
+
+Hierarchal builders		Nest builders in subclasses to be recursively called for construction of large, multipart objects
+				Requires generic typing to work as well ass self method to subclass!!
+				When implemented properly, allows multiple vargs!
+				Can get around java's lack of self type called simulated self type idiom
+
+Cons			Verbose unless 4+ args could happen, Builders make objects slowly with small amounts of arguments!
+
+Item 3		"Enforce singleton property with private constructors or enum typing"
+			A class can use only one instance with the use of private construction or enums
+
+Singleton	A class with a member object or itself only instantiated once
+		Near impossible to test due to no mocking!!
+
+2 approaches	1) use final on instance member in private constructor
+			Client can still break using reflection to call private construction!!
+				To fix this, throw an exception if done twice+
+			Preferred option unless generics or flexible input
+		2) create a static factory with only one reference created
+			Also can be reflected, same solution!!
+			Simpler and more flexible also has generics capability
+
+Making serializable	to make this serializable instance fields must be made transient!!
+			provide a readResolve to prevent accidental duplicates on deserial!!
+
+Enum approach	Most preferrable, serializable by default, immune to reflection!!
+			Cannot extend superclassing other than enum type!!
+				To fix this, interface it instead!!
+
+Item 4		"Enforce non-instantiability with private constructors!"
+
+static class	sometimes utility methds and values can be grouped when instantiating would be useless
+		Abstract methods cannot prevent subclassing and instantiating
+			To prevent this, create a private constructor to prevent ever calling hidden constructor
+				Put in an assertionError to prevent itself accidentally constructing!!
+
+Item 5	"Prefer dependency injection to hardwiring resources!"
+
+Dependency injection	Some items need to be singleton members or used as a utility but need to be swapped out with other possible behaviors on runtime.
+				To do this, we inject a dependency member in its constructor
+					This allows immutability but ability to swap behavior
+						Backbone of factory pattern
+
+Downside	can clutter up large projects very quickly unless framework is used!!
+
+Item 6		"Avoid creating unnecessary objects!"
+			If an object becomes expensive to create or cumbersome to store, cache it!
+
+Regex		Regex methods often are expensive to construct due to using state machines, to prevent this always use .compile() to field results for later usage without instantiating!
+
+Autoboxing	When concatenating or typing both can end up creating seperate instances on each new item
+			To fix this, store results, use builders or use sole primitives
+			Can cause amazing slowdowns if not
+
+Pooling		Do never pool objects for use manually unless deadling with heavy objects in databases!!
+
+Item 7		"Eliminate obsolete object references"
+			Always unpoint inactive or useless objects for garbage collection
+Problem		all objects that are referenced by anything are never garbage collected in java
+			To fix this, you can nullify, but be warned nullifying clutters code!!
+				Only null if really done in future!!
+Best practice	Use scope to nullify references by making references within a method only and cease to exist out of scope, nullifying!!
+			Only nullify if unavoidable in scope!!
+caches		Can easily be forgotten as references
+			if only active when referenced:
+				use weakHashMap, it derefrences inactive keys
+			if not known when inactive:
+				periodically dereference items by method side effect or background thread
+					See java.lang.ref if need more help
+
+listeners and callbacks		always use a weakHashmap!
+
+Heap Profiler		a debug tool that can detect small memory leaks, use sparingly
+
+Item 8		"Avoid finalizers and cleaners"
+			They suck in every way, and should feel bad
+
+		1) They are dependent on garbage collection, which is slow
+		2) Never guaranteed to be done
+		3) Slow down processing by a buttload
+		4) They ignore any and all catching and throwing (especially finalize)
+			This allows a finalizer attack
+Finalizer attack	Finalize can be invoked and then never throw an exception or lock, allowing illegal operations to occur, such as creating a malicious and impossible object to do its bidding
+			To prevent this use AutoClosable and try-with-resources
+
+Only 2 uses
+		1) safety net in case nothing else can be done to clear the heap
+		2) non-native code needs to be un-instantiated
+
+Cleaners	Less dangerous, but still attrociously slow, pollute readability, hard to use!
+			Registers an object to clear and clears using argument resources
+
+Item 9 		"Prefer try-with-resources to try-finally"
+			try-finally originally for closing when exceptions are caught, but allows exceptions to behave incorrectly when happening during finally{}
+			Multiple arguments require multiple finally{}!!
+				Looks awful
+			Can also throw itself while running ignoring error!!
+try-with-resources	Requires AutoClosable to run, but doesn't need multiple finally for multiple arguments and suppresses errors customly.
+				Catch works inside it too!!
+     
