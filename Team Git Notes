@@ -82,4 +82,56 @@ what could be changed:
     Some more synonyms could be added such as ran to or go to
     Some elements of the game become zany like the troll eating you lantern, maybe more sensical puzzles could be made?
 
+The scrum guide:
+
+Scrum   Framework for developing, delivering and sustaining complex products
+            made in early 1990's
+Usages  Originally meant to manage developed products, but can be for:
+            R+D of markets
+            Developing products
+            Frequent re-releases
+            Cloud maintenance and Development
+            Renewing products
+Theory  Built on process control theory or Empiricism:
+            Knowledge is from experience and decisions on known information.
+                To control risk, Scrum incrementally controls development.
+3 Pillars   Transparency, Inspection, Adaptation
+
+
+Headfirst design patterns ch1: Intro to design patterns
+    Usage and benefits of patterns found by wisdom of past coders
+
+The duck problem    A method called fly() on a duck pond simulation program is inherited to all Duck subclasses
+                        Sadly, causes most fake ducks to fly as well, as well as not making code easy to maintain and fix
+                        Could be overriden but would require updating the Duck class for each subclass forever
+
+Problem with inheritance    Code is duplicated but adjusting at runtime is difficult and unintended behavior can be added to subclasses
+
+Interface Solution  a Flyable interface is made calling its own fly() methods could avoid duplication, but needs constant tweaking
+
+Encapsulation Principle     "Identify aspects of you app that can vary and seperate them from what stays the same"
+                                In most cases of maintenance, we want to be able to remove and replace changing patterns        
+                                    Basis of all design patterns
+Interface Principle         "Program to an interface, not an implementation"
+                                Changing parts should be made into an interface or abstract interface for established
+                                    This allows methods called by interface to be decided on runtime for flexibility
+                                    ex: dog a= new dog(); becomes Animal a = new Dog(); or Animal a = getAnimal();
+                                            a.makeSound();
+    Pros:   Allows other classes to reuse set of behaviors, can be applied at any part of the dev cycle
+
+How to integrate behavior   1) Add instance variables to main class that are interface in types
+                            2) Each class polymorphically points to specified swappable behavior
+                            3) Implement interface- main class calls offloaded method on runtime
+                            4) Subclasses intitialize with given behaviors
+                            5) Apply set behavior in setter and getter for on-runtime swapping/adjusting
+
+Composition Principle   "Favor composition over inheritance"
+                            Encapsulated features are generally more flexible than superclassing and allow runtime swapping
+
+Strategy patterns   Family of algorithmns that encapsulate a set of behaviors for interchangability
+                        Most useful for independent changes and preferences from users
+
+Chapter 2 headfirst design patterns: Observer pattern
+
+
 
