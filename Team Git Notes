@@ -399,4 +399,6 @@ Item 9 		"Prefer try-with-resources to try-finally"
 			Can also throw itself while running ignoring error!!
 try-with-resources	Requires AutoClosable to run, but doesn't need multiple finally for multiple arguments and suppresses errors customly.
 				Catch works inside it too!!
-     
+Parse Tree:  A tree of all inputs divided out into parsed tokens
+Abstract Syntax Tree: A refined parse tree, removes some superluous information in forming tree
+    Follows a specific syntax   
