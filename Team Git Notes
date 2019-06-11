@@ -402,3 +402,54 @@ try-with-resources	Requires AutoClosable to run, but doesn't need multiple final
 Parse Tree:  A tree of all inputs divided out into parsed tokens
 Abstract Syntax Tree: A refined parse tree, removes some superluous information in forming tree
     Follows a specific syntax   
+
+
+Spike: Command Data Structures:
+    List objects: Ordered collection of items
+        Syntax [<literal>,<literal>,<literal>...]
+        Can add, remove or search similar to Java's arrayList
+    Tuple: Used to hold multiple objects
+        Hold Strings of contained objects in csv form
+        Used when statement or user-defined function will not change       
+            Similar to array in java
+        Syntax: ('','','',''...)
+        Acccess:    new_tuple[item][item inside]...
+        Tuples are stored in multi-dimensional array form for nesting
+    Dictionary: Address-book analog, Keys paired to a value like a Java map
+        Keys are immutable, values are not
+        No order
+        .del can delete a key-value paired
+        .items() reuturns all Tuples
+    Sequence: Superclass of List and Tuple and str
+
+    Set: unordered collection of primitives
+        Used for set theory and Binary Algebra mostly
+            Hence permutation is useless
+    !! copying collections passes by reference!!
+
+Spike: Command Handling
+
+    Interpreter vs Compiler:    Interpreter converts input into another language or format, Compiler converts input into raw commands or data
+
+    Parsing:        Analysis of a text into syntactical components
+        Ways of parsing text:
+            1) Complex parsing:     Sending raw text through a primitive class(such as dictionary or split list) then into a complex framework(Panda's Dataframe, etc.)
+                    Useful if there is not format, allowing the created framework to discover/sort the data with tweaking
+            2) String manipulation: If the text is in consistant format, standard Split() lists and dictionaries can slice up data and manipulate and categorize it
+                Seperate text manually with pre-defined splitting methods and agreed-upon format of input
+            3) Regex:               Regular expressions can use its own language to functionally seperate text if the format is somewhat consistant, but complex
+                    Use regex filter to match keys to paired text slices
+                    Usually said to be the worst route
+        How Parsing works:
+            Structure:  
+                Lexer: Parser contains this, Often a Scanner or Tokenizer. 
+                        Scans a given raw text and produces matching tokens based on rules or productions decided upon.
+                Proper Parser: Converts given tokens from lexer into abstract tree of a statement.
+                    Ex: 437 + 12 -> lexer: NUM OPERATOR NUM -> parser: Sum_of(NUM,NUM)
+
+                These rules are often specified in markup languages for that purpose
+
+                Abstract Tree: A produced tree of the result of proper-parser, often pruned to create a Concrete Syntax Tree for better standards and easier usage
+                    This is usually done by the developer's decisions or the user's
+                    !! Beware, information is lost going from Abstract to Concrete in Grammar!!
+                    
