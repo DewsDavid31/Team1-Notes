@@ -501,10 +501,52 @@ Spike: Command Handling
                             Reviews: very effective for improving capability
                                 Knowing others look affects quality
                                 Others know things you don't
-                                
+
     Agile: Emphasizes quick release cycles, allow changes in design on the fly
             
                             Also communication standards, book of style will help communicate
     Leadership vs. mgmt: mgmt finding strengths and weaknesses of team members and their ways to success, leadership find commonalities for unity of team and direction
         Mgmt is carrot, leadership is stick
             !!Both are needed in a team!!
+
+Headfirst CH 4 The factory pattern
+    Instantiation:      Can be very messy, if we need to instantiate a class that could be anything, a large set of if statements and constructors must be made
+The problem with New:   Although it is necessary in languages like Java, it can lead to complications on being dynamic at runtime
+
+Our problem:    We own a pizza parlor with a class pizzaOrder to be constructed, but different types of pizza require a String argument with a switch statement in construction
+    This sounds ok, until revisions of the menu become a mountain of new, sometimes-overlapping, pizza types
+    
+Factories:      We encapsulate construction in another class, called a factory that calls construction on its own and returns a wanted object of other class at runtime
+                    Our Pizza class begins with its own factory in its members!
+
+                    This is still not the actual pattern but related!!!
+The bigger issue:   Upon releasing this new factory-based class, other companies and services started to use it customly, even when constructed customly for each client
+                        Abstraction:    We can replace the factory class code back into the original pizzaStore class, but make the pizzaStore factory into an abstract method within
+                                Then we can subclass to each client type!
+                                    Now each subclass can define their createPizza() to the abstract method to make an interface of sorts
+
+Big Picture:    The Factory pattern
+    Encapsulation of object creation
+        A Creator class extend subclass creator classes that pick a concrete product to instantiate from the concreteProducts that interface the abstract product
+            Creator doesn't decide the product since it has no connection to products at all!
+                !! Each subclass only has one dependency while non-factory has N dependencies to 1!!
+                
+Dependency inversion principle: "Depend upon abstractions. Do not depend upon concrete classes"
+    Instead of many classed depending upon parents, both parents and children depend on middle abstract class
+     1) create abstract product class for creator
+     2) subclass abstract class to product options
+     3) let creator(s) call abstraction as interface
+     4) let static factories in abstraction grab needed concrete product
+
+     Guidelines: Not mandatory, but good to follow
+        1) No variable should reference concrete class
+        2) No class should be from concrete class
+        3) No method should override method of its base classes
+Problem of ingredients: what if each substore needs different ingredients for pizza?
+    Needs their own set of factories
+        Make an interface for possible components types
+        Build subclasses that implement the interface for each region
+        Implements set of ingredients to be used with factory
+        attach calls from pizza store code
+
+    
