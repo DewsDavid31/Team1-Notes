@@ -453,3 +453,58 @@ Spike: Command Handling
                     This is usually done by the developer's decisions or the user's
                     !! Beware, information is lost going from Abstract to Concrete in Grammar!!
                     
+6/12 In-class notes
+    Smith   Will give us an API for the game in YAML form
+
+    dictionaries    Python loves maps, I mean *cough* Dictionaries, most efficient in Python
+
+    Approaches:     2d dictionary: Verbs:values -> objects: values
+
+    Method-references:      Strength of Python Functional passing, methods are considered objects themselves
+                                Ex: def foo(){} -> actually is a value, we can def bar(foo()){}
+                                    Methods can be a value in a dictionary!!
+                                        !! use instead of if/then/else!!
+    Aliases:                Cannot use lists as keys
+                                Method should deal with Aliases
+    
+    Non-functional requirements:    Performance, Real-time Performance, Maintainable, Modifiable, Readable, etc.
+                                        Come on a scale unlike functional requirements
+
+    Analysis
+        Two kinds:
+                
+                1) static - stats on code before running -> sonarcloud/pylint/radon
+                    linters, cyclomatic complexity(number of paths/ reading complexity), method length
+                2) dynamic - stats on code while running -> spotbugs/valgrind/purify
+                    We are not using dynamic during class
+    
+    Testing:
+        1) Acceptance - Client requirements met
+        2) Unit: method - TDD, test per method write before any code is written. Fail first then succeed
+        3) Integration: class - Testing classes meshing together
+        4) System - Testing entire system
+
+    Unit Test: most important
+        write test, make sure it fails, write enough to make it work
+        If you can't write a test, don't write the code
+
+            Implementation: requirements, design and process
+                Bad implementation is a project crasher
+                    Follow style of pep8!!
+                        Pylint will notify, other tools will check
+                            Naming: kramer's rules on Naming
+                                !!avoid hungarian notation: using type in name!!
+                            Tests: must be easy to run,50:50 code and test
+                                Run quickly and a lot
+                            Libraries: Use often, but cited
+                                Use another library wherever possible
+                            Reviews: very effective for improving capability
+                                Knowing others look affects quality
+                                Others know things you don't
+                                
+    Agile: Emphasizes quick release cycles, allow changes in design on the fly
+            
+                            Also communication standards, book of style will help communicate
+    Leadership vs. mgmt: mgmt finding strengths and weaknesses of team members and their ways to success, leadership find commonalities for unity of team and direction
+        Mgmt is carrot, leadership is stick
+            !!Both are needed in a team!!
