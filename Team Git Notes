@@ -549,4 +549,58 @@ Problem of ingredients: what if each substore needs different ingredients for pi
         Implements set of ingredients to be used with factory
         attach calls from pizza store code
 
-    
+Factory process:
+    Abstract Factory provides an interface for possible products
+    Local Factory provides implementations for products
+    Store class as template for concrete factory output
+    Concrete store calls local factory class to instantiate resources and combine resources on runtime
+    All return a product decided upon runtime by local scope and identification
+Formal Definition: Defines an interface for making families of related/dependent objects without specifying concrete classes
+    Client class- made with specs of abstract factory and calls abstract factory interface
+    Abstract factory-interface with product creation methods
+    Concrete Factory- child of abstract factory that calls abstract
+    Abstract Product- interface of product and its creation methods
+    Concrete Product- The locally defined product option implementing abstract product
+
+    Client is decoupled from specifics of dependencies
+    Allows swapping of possible products while the factory only cares about methods and resources to make a product
+        Method vs abstract: Method is used for making one product, while entire pattern is used for a family of products
+
+Headfirst Design ch6 Singleton pattern
+    Why not just global?: Global variable will require to be created if in an object, may prove to be intensive
+
+    public MyClass {
+        private MyClass()
+    }
+    ^^ This creates a situation of scope where only the class itself can call its own constructor
+            But to call it, you must use a static factory method like
+                public static MyClass getInstance(){
+                    return new MyClass();
+                }
+
+        To make the factory method ensure singleton, we add a reference that always returns the wanted object, unless it is null, it creates one
+        if(instance == null){
+           instance =  getInstance();
+        }
+        return instance;
+
+    Our problem: We command a chocolate boiler intended to combine milk and chocolate for chocolate bars
+        We can accidentally fill a full boiler or empty a full one!
+            seems fine because isBoiled an isFull are checked before
+                !! But other classes instantiating it can cause undefined behavior!
+
+    Formal Definition: Ensures a class has only one instance and providing global access to it
+        Singleton class- has a static unique instance member and a static factory method that calls a private constructor, while checking for Singleton
+                !!! other threads can stumble and make their own instances!!!
+                    !! To fix this add synchronized to prevent convergent threads on same method!!
+                            !! Is computationally expensive, because in-line operations are slow in assembler!!
+                            Alternative, if too slow for usage:
+                                return a static instance of unique singleton early as a member 
+                                    Called eager Instantiation
+                                    factory just returns member!!
+                                        !! This works because JVM reaches instance creation before threading!!
+                            Another alternative, use double-check locking to reduce synchronization
+                                Check if instance exists,then check again inside the synchronization
+                                    Needs to add volatile to instance above in member
+                                        allows multithreading at beginning for speed
+                            
