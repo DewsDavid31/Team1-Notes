@@ -1,0 +1,32 @@
+Using git:
+
+
+git add <file or directory wanted>
+    In visual studio: >Git: Stage (when file is opened)
+        for staging all changes:
+            In visual studio >Git: Stage All changes
+            In Bash: git add -a
+    temporarily holds the files currently looked at by editor or near ls of terminal
+    According to documentation, stores a directory into an "Index" abstractly
+
+git commit -m "message"
+    In Visual Studio: >Git: Commit
+    prepares updates to file for repo upload and can notify the github site of this it appears
+    According to documentation, stores index contents into what is called a Head
+
+git push
+    In visual studio: >Git: Push
+    Appears to apply changes to repo on website if able, sometimes an argument of the repo used is required in command line
+    Can sometimes need the remote url if connection not established it seems
+    According to practice and documentation, pushes head information to remote server and clears the entire 'tree' of data from head to index after
+
+git pull <url>
+    In Visual Studio: >Git: Pull
+        Visual studio appears to assume current file is pulled to
+    Appears to merge from remote to current ls location
+
+git fetch <url>
+    In Visual Studio: >Git: fetch
+        In VS temporarily opens current version of file
+        In command line, appears to produce a copy of the current file pulled at ls location or specified path
+

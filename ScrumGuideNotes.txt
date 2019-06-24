@@ -1,0 +1,17 @@
+The scrum guide:
+
+Scrum   Framework for developing, delivering and sustaining complex products
+            made in early 1990's
+Usages  Originally meant to manage developed products, but can be for:
+            R+D of markets
+            Developing products
+            Frequent re-releases
+            Cloud maintenance and Development
+            Renewing products
+Theory  Built on process control theory or Empiricism:
+            Knowledge is from experience and decisions on known information.
+                To control risk, Scrum incrementally controls development.
+3 Pillars   Transparency, Inspection, Adaptation
+
+
+

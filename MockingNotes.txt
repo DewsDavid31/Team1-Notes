@@ -1,0 +1,55 @@
+Mocking lecture by luke:
+	
+	TDD - We require to test things, but sometimes some things can be untestable because their returning values is unknown
+	
+	TDD Process:
+		We create a method with nothing but pass
+		We make a test method testing return behavior
+		Configure tests in root directory in VSCODE
+		We get an assertion error
+			E is show next to errored comparison
+		We code to pass the test in our method
+		If we test for user input, we make a test of different output for an input
+			Issue is that we cannot make both tests pass without input
+			Input() will prompt the user for input
+				Testing this will provide an OSERROR because it cannot give input and never pass tests
+	mock - a unittest utility that can handle input
+		In our requirements-dev.txt add pytest-mock
+
+		To use it in our case
+			from unittest import mock
+
+			use mock as argument of test
+
+			run argument can be used to run(method, <built in keyword>= [])
+				!! BUT needs luke's new pytest stuff!!
+				Captures input/output and errors at once
+		use in test:
+			with mock.path('builtins.print') as mocked_input:
+				mocked_input.side_effect = ["alternative input 1","alternate input 2 etc"]
+				your_test()
+		with - creates a context in python, allows temporary settings of behavior inside indent
+
+		'builtins.' gets a set of built-in parts of methods/classes/environment
+
+		'print' overrides some part of the print part of a method/environment
+	
+		side_effect - is a list of inputs that can be fired off of test into input
+			fired off into test on each test call
+
+		.return_value - sets the input to permanently be the argument for the entire with indent
+
+		What if the method is supposed to only be called a certain amount of times?
+			set .call_count to the amount of calls tested
+	When should I mock?:
+		1. input/output of functions
+		2. mouse/hardware detection
+		3. databases usage
+		4. random numbers input/output
+	What is a @fixture?
+		allows importing an item in code for testing
+		allows reusing setup for tests
+	if __name__ = '__main__'
+		This line wont run if not ran by itself
+			This is because python assigns the variable __name__ to be the name of the program that called main() in this program, and __main__ if it calls itself
+	

@@ -1,0 +1,37 @@
+Peter's meeting notes:
+	
+	Merge Conflicts:
+	What is a Conflict: When line-by line two branches are brought together and git cannot find a common parent and/or cannot find a way to combine them
+		After you merge in a pull-request or any merge that cannot successfully combine, git will show you what cannot combine through vscode or any editor
+		
+		To solve these:
+		 Git or VSCODE will show you the conflicting code in show changes
+			!! warning, the 'show changes' button doesn't give you editable files, you still have to edit the file you made with both versions in file seperated by a '========'
+			
+			!! Above the '====' is the Current Changes, Below it is the Incoming Changes!!
+			If some code is incorrect: just delete the red code in Incoming Changes file or >>>>> <branch name> that is incorrect
+			If you want to add both to current file: copy everything into the Current Changes file or  >>>>>HEAD file it opened 
+				Both of these have their own buttons in VSCODE!
+			What is Current Changes or <<<<HHEAD?
+				under this line, shows the local changes
+			What is Incoming Changes or >>>>> <branch_name>?
+				the version on github that is merging
+		
+	In-Class-Example:
+		Conflict.sh was sent to main slack, designed to be ran through linux/mac terminal and force a git conflict using git commands
+		Creates shakespear git and tries ot make two changes at once if it fails, is saved as all versions, flagged as a conflict
+			You can then select what you want in 
+	
+	What causes conflicts?
+		When conflicting, two changes cannot be added together, GIT will show the two+ versions trying to be combined that do not agree
+	
+		Can be caused by:
+			editing a branch at the same time
+			merging branches that are far away from eachother (no parent to compare)
+			
+	Where to run git stuff:
+		Always work in directory/folder you are merging on the vs!!
+	
+	Git log: produces a log of all commits/ merges that happened to check on status
+
+	Merge Tool: A utility that opens up an editor for each file and select what you want, VSCODE can do this if you ask luke!!

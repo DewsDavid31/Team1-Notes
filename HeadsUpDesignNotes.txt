@@ -1,0 +1,250 @@
+
+Headfirst design patterns ch1: Intro to design patterns
+    Usage and benefits of patterns found by wisdom of past coders
+
+The duck problem    A method called fly() on a duck pond simulation program is inherited to all Duck subclasses
+                        Sadly, causes most fake ducks to fly as well, as well as not making code easy to maintain and fix
+                        Could be overriden but would require updating the Duck class for each subclass forever
+
+Problem with inheritance    Code is duplicated but adjusting at runtime is difficult and unintended behavior can be added to subclasses
+
+Interface Solution  a Flyable interface is made calling its own fly() methods could avoid duplication, but needs constant tweaking
+
+Encapsulation Principle     "Identify aspects of you app that can vary and seperate them from what stays the same"
+                                In most cases of maintenance, we want to be able to remove and replace changing patterns        
+                                    Basis of all design patterns
+Interface Principle         "Program to an interface, not an implementation"
+                                Changing parts should be made into an interface or abstract interface for established
+                                    This allows methods called by interface to be decided on runtime for flexibility
+                                    ex: dog a= new dog(); becomes Animal a = new Dog(); or Animal a = getAnimal();
+                                            a.makeSound();
+    Pros:   Allows other classes to reuse set of behaviors, can be applied at any part of the dev cycle
+
+How to integrate behavior   1) Add instance variables to main class that are interface in types
+                            2) Each class polymorphically points to specified swappable behavior
+                            3) Implement interface- main class calls offloaded method on runtime
+                            4) Subclasses intitialize with given behaviors
+                            5) Apply set behavior in setter and getter for on-runtime swapping/adjusting
+
+Composition Principle   "Favor composition over inheritance"
+                            Encapsulated features are generally more flexible than superclassing and allow runtime swapping
+
+Strategy patterns   Family of algorithmns that encapsulate a set of behaviors for interchangability
+                        Most useful for independent changes and preferences from users
+
+Chapter 2 headfirst design patterns: Observer pattern
+
+Example     A weather station needing to update a bunch of display devices on current forecast
+
+Problem     We want to maintain a link with an assortment of devices and display types without wasting code
+
+Main pattern    We encapsulate a Publisher and Subscriber model, called Subject and Observer in our cases
+
+Observers       Can subscribe or unsubscribe to updates by registering or deregistering with Subject
+
+The pieces involved     Need a ConcreteSubject class pointing to a Subject interface that can call or be called by an Observer interface pointed by a concreteObserver object
+                            This is done such that the data, and behaviors of each piece are easily changable like pattern 1
+Pros        Cleaner sharing of same data
+Cons        Can be counterintuititve in certain implementations
+
+Loose Coupling  Interaction with little publicity to each other piece
+                    Code reuse is indepenedent from Observer and Subject sides
+
+Loose Coupling Principle    "Strive for loosely coupled designs between objects that interact!"
+                                Allows objects to interact more flexibly
+
+The general paradigm
+                        Subject object deals with nitty gritty setters and getters, Subject then uses interface to call notify when changes occur in getters and setters
+                        Said notify either calls observer interface's update method, injecting new data or has observer inteface call getters and setters on sent instance 
+                        of Subject from Subject itself to later work with given information in actual concreteObserver as it wishes.
+
+Subject interface   
+                        registerObserver - takes observer as argument to add to arraylist usually
+                        removeObserver - removes observer from arrayList to no longer be notified
+                        notifyObserver - sends reference of itself and data object usually, null if nothing changed
+Observer interface      
+                        update - called using arguments specified by api to be states/data that currently changed in Subject
+
+displayElement
+                        The concreteObserver usually, could do anything since Subject doesn't know or creates
+
+Push               When the Subject is set such that data is injected into observer class
+Pull                When a Subject is set such that observers get data from passed instance of Subject
+
+Java's supported    Has built-in libraries for Observable type and Observer classes 
+                        Allows both push and pull as well as custom settings for when updates occur
+How to change updates      notify will never be called unless setChanged() is called first, allowing programmers to specify when data should be pushed or pulled
+
+Issues in Usage     Observable cannot be trusted to produce data in a specific order upon pull or push
+                     Observer is a class not an interface in java supported libraries, not flexible in implememntation
+                        setChanged() cannot be sub-classed
+
+Head-first patterns Ch 3 Decorator pattern:
+    Example         A coffee shop is struggling to update its massive menu with changing costs and build-your-own format of beverages
+
+    Original setup  Superclass of Beverage, subclassing each possible combination and each beverage has a cost method   
+                        An attrocity, could cause millions upon millions of classes and cost adjustments cannot be easily applied!
+
+    Open-Closed Principle   "Classes should be open for extension, but closed to modification"
+        Allows stability, but flexible usage of code
+            Comes at the price of complexity!!
+
+    Decorator big-picture   Base object is wrapped in added object wrapped in added object and so on. To call methods, call outside wrapper, which calls inside wrapper etc. etc.
+        Lends itself to recursion in my mind
+        Requires each wrapper to be the same type as its enwrapped object!!!
+            Because it is the same type, the entire pile of wrappers can be passed around as one single object of its type!!
+
+    implementation  Components, or base objects are made with interfaces
+                        concreteComponent uses and interface of Component to then be wrapped in Decorator interface that is used by the concreteDecorator class
+                            All parts must have the same recursive function, but concreteDecorator can have as many methods as it wishes!
+    Drawbacks   Fails to function properly on component-only calculations such as end-of-sale discounts because then each layer would have to know previous layers
+                Order cannot be guaranteed without other patterns!!
+                Can produce an insane amount of small instances and may require extensive libraries with counterintutive combinations!!
+
+    Java.IO     Uses this pattern extensively with components being InputStreams and wrappers being BufferedReader and other readers
+
+Headfirst CH 4 The factory pattern
+    Instantiation:      Can be very messy, if we need to instantiate a class that could be anything, a large set of if statements and constructors must be made
+The problem with New:   Although it is necessary in languages like Java, it can lead to complications on being dynamic at runtime
+
+Our problem:    We own a pizza parlor with a class pizzaOrder to be constructed, but different types of pizza require a String argument with a switch statement in construction
+    This sounds ok, until revisions of the menu become a mountain of new, sometimes-overlapping, pizza types
+    
+Factories:      We encapsulate construction in another class, called a factory that calls construction on its own and returns a wanted object of other class at runtime
+                    Our Pizza class begins with its own factory in its members!
+
+                    This is still not the actual pattern but related!!!
+The bigger issue:   Upon releasing this new factory-based class, other companies and services started to use it customly, even when constructed customly for each client
+                        Abstraction:    We can replace the factory class code back into the original pizzaStore class, but make the pizzaStore factory into an abstract method within
+                                Then we can subclass to each client type!
+                                    Now each subclass can define their createPizza() to the abstract method to make an interface of sorts
+
+Big Picture:    The Factory pattern
+    Encapsulation of object creation
+        A Creator class extend subclass creator classes that pick a concrete product to instantiate from the concreteProducts that interface the abstract product
+            Creator doesn't decide the product since it has no connection to products at all!
+                !! Each subclass only has one dependency while non-factory has N dependencies to 1!!
+                
+Dependency inversion principle: "Depend upon abstractions. Do not depend upon concrete classes"
+    Instead of many classed depending upon parents, both parents and children depend on middle abstract class
+     1) create abstract product class for creator
+     2) subclass abstract class to product options
+     3) let creator(s) call abstraction as interface
+     4) let static factories in abstraction grab needed concrete product
+
+     Guidelines: Not mandatory, but good to follow
+        1) No variable should reference concrete class
+        2) No class should be from concrete class
+        3) No method should override method of its base classes
+Problem of ingredients: what if each sub-store needs different ingredients for pizza?
+    Needs their own set of factories
+        Make an interface for possible components types
+        Build subclasses that implement the interface for each region
+        Implements set of ingredients to be used with factory
+        attach calls from pizza store code
+
+Factory process:
+    Abstract Factory provides an interface for possible products
+    Local Factory provides implementations for products
+    Store class as template for concrete factory output
+    Concrete store calls local factory class to instantiate resources and combine resources on runtime
+    All return a product decided upon runtime by local scope and identification
+Formal Definition: Defines an interface for making families of related/dependent objects without specifying concrete classes
+    Client class- made with specs of abstract factory and calls abstract factory interface
+    Abstract factory-interface with product creation methods
+    Concrete Factory- child of abstract factory that calls abstract
+    Abstract Product- interface of product and its creation methods
+    Concrete Product- The locally defined product option implementing abstract product
+
+    Client is decoupled from specifics of dependencies
+    Allows swapping of possible products while the factory only cares about methods and resources to make a product
+        Method vs abstract: Method is used for making one product, while entire pattern is used for a family of products
+
+Headfirst Design ch6 Singleton pattern
+    Why not just global?: Global variable will require to be created if in an object, may prove to be intensive
+
+    public MyClass {
+        private MyClass()
+    }
+    ^^ This creates a situation of scope where only the class itself can call its own constructor
+            But to call it, you must use a static factory method like
+                public static MyClass getInstance(){
+                    return new MyClass();
+                }
+
+        To make the factory method ensure singleton, we add a reference that always returns the wanted object, unless it is null, it creates one
+        if(instance == null){
+           instance =  getInstance();
+        }
+        return instance;
+
+    Our problem: We command a chocolate boiler intended to combine milk and chocolate for chocolate bars
+        We can accidentally fill a full boiler or empty a full one!
+            seems fine because isBoiled an isFull are checked before
+                !! But other classes instantiating it can cause undefined behavior!
+
+    Formal Definition: Ensures a class has only one instance and providing global access to it
+        Singleton class- has a static unique instance member and a static factory method that calls a private constructor, while checking for Singleton
+                !!! other threads can stumble and make their own instances!!!
+                    !! To fix this add synchronized to prevent convergent threads on same method!!
+                            !! Is computationally expensive, because in-line operations are slow in assembler!!
+                            Alternative, if too slow for usage:
+                                return a static instance of unique singleton early as a member 
+                                    Called eager Instantiation
+                                    factory just returns member!!
+                                        !! This works because JVM reaches instance creation before threading!!
+                            Another alternative, use double-check locking to reduce synchronization
+                                Check if instance exists, then check again inside the synchronization
+                                    Needs to add volatile to instance above in member
+                                        allows multithreading at beginning for speed
+                            
+Heads up design patterns ch 6
+
+The command pattern - Encapsulation of Method invocations
+	Doesn't worry about implementation of methods, instead reuses crystallized methods
+
+	Our problem: A remote control is given with seven programmable slots each wish an on/off button and a global undo button
+			Many different vendors made programs for the remote and the manufacturers want an api for programming the remote such that each slot can be assigned control of a device(s)
+
+		Contains a whole array of interfacing classes for all sorts of appliances
+			Some methods are non-boolean and could be anything!!
+	Big Picture:
+		Have a requester that requests to an object without knowing any details about the request's handling
+			Command object - created on request side, implementing the 'do work' method which does 'something' the requester doesn't know what
+	
+	An example: The diner!
+		Customer gives waitress an order, waitress places order on counter, cook preps meal
+		Order slip - The request, has an interface of only one method, orderUp()
+		Cook- has the knowledge and work to do, implements all methods implied in implemented orderUp(), details are inside request
+
+	How it works:
+		Client object makes a command object
+		Command object provides one method: execute
+		Client calls setCommand() on an invoker objects where it gets stored
+		Invoker at some point calls the command objects execute()
+		Execute invokes actions in reciever
+	In Details:
+		Reciever is exposed to only one method, execute()!
+			No other object knows what execute does, nor cares
+			Can rapid-fire instantiate many disparate and constantyl changing orders/methods at once!
+		
+
+		Diagram:
+		
+			Client -> Reciever <- Concrete Command -> Command interface <- Invoker
+			Client -> Concrete Command
+				In essence, wrapping up a bunch of call parameters and interfacing the commanded objects to do the bidding.
+					
+	The command pattern: Encapsulates a request as an object letting you parameterize objects with different requests, queue or log requests and support doable actions!
+
+Macros-  A new command that encompasses many other commands in one command object, allowing multiple calls to happen at once.
+	A macro class can be made of an array of commands that can be given as arguments to use in chain of command pattern!
+Queueing Requests - Macro sets can be used to persist a chain of requests even after program is complete, or even in another thread. A job queue is based on this. Allows a flexibility for requests to be of any kind without Invoker and Command being coupled at all!
+
+Logging requests- Crash recovery is important, to recover, a list of past methods/requests can allow accurate recovery.	
+		Command Pattern can use load() and store() as implemented commands
+			Serialization native to java can help this with some pitfalls!!
+			Can save from a last stable checkpoint for expensive persistence
+			Invoker of our pattern stores used methods using store()
+				upon crash, load is called on invoker
+Chapter 7 Adapter and Facade Patterns	
