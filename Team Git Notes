@@ -542,7 +542,7 @@ Dependency inversion principle: "Depend upon abstractions. Do not depend upon co
         1) No variable should reference concrete class
         2) No class should be from concrete class
         3) No method should override method of its base classes
-Problem of ingredients: what if each substore needs different ingredients for pizza?
+Problem of ingredients: what if each sub-store needs different ingredients for pizza?
     Needs their own set of factories
         Make an interface for possible components types
         Build subclasses that implement the interface for each region
@@ -600,7 +600,79 @@ Headfirst Design ch6 Singleton pattern
                                     factory just returns member!!
                                         !! This works because JVM reaches instance creation before threading!!
                             Another alternative, use double-check locking to reduce synchronization
-                                Check if instance exists,then check again inside the synchronization
+                                Check if instance exists, then check again inside the synchronization
                                     Needs to add volatile to instance above in member
                                         allows multithreading at beginning for speed
                             
+Heads up design patterns ch 6
+
+The command pattern - Encapsulation of Method invocations
+	Doesn't worry about implementation of methods, instead reuses crystallized methods
+
+	Our problem: A remote control is given with seven programmable slots each wish an on/off button and a global undo button
+			Many different vendors made programs for the remote and the manufacturers want an api for programming the remote such that each slot can be assigned control of a device(s)
+
+		Contains a whole array of interfacing classes for all sorts of appliances
+			Some methods are non-boolean and could be anything!!
+	Big Picture:
+		Have a requester that requests to an object without knowing any details about the request's handling
+			Command object - created on request side, implementing the 'do work' method which does 'something' the requester doesn't know what
+	
+	An example: The diner!
+		Customer gives waitress an order, waitress places order on counter, cook preps meal
+		Order slip - The request, has an interface of only one method, orderUp()
+		Cook- has the knowledge and work to do, implements all methods implied in implemented orderUp(), details are inside request
+
+	How it works:
+		Client object makes a command object
+		Command object provides one method: execute
+		Client calls setCommand() on an invoker objects where it gets stored
+		Invoker at some point calls the command objects execute()
+		Execute invokes actions in reciever
+	In Details:
+		Reciever is exposed to only one method, execute()!
+			No other object knows what execute does, nor cares
+			Can rapid-fire instantiate many disparate and constantyl changing orders/methods at once!
+		
+
+		Diagram:
+		
+			Client -> Reciever <- Concrete Command -> Command interface <- Invoker
+			Client -> Concrete Command
+				In essence, wrapping up a bunch of call parameters and interfacing the commanded objects to do the bidding.
+					
+	The command pattern: Encapsulates a request as an object letting you parameterize objects with different requests, queue or log requests and support doable actions!
+
+Macros-  A new command that encompasses many other commands in one command object, allowing multiple calls to happen at once.
+	A macro class can be made of an array of commands that can be given as arguments to use in chain of command pattern!
+Queueing Requests - Macro sets can be used to persist a chain of requests even after program is complete, or even in another thread. A job queue is based on this. Allows a flexibility for requests to be of any kind without Invoker and Command being coupled at all!
+
+Logging requests- Crash recovery is important, to recover, a list of past methods/requests can allow accurate recovery.	
+		Command Pattern can use load() and store() as implemented commands
+			Serialization native to java can help this with some pitfalls!!
+			Can save from a last stable checkpoint for expensive persistence
+			Invoker of our pattern stores used methods using store()
+				upon crash, load is called on invoker
+6/18 notes:
+	Too much - Our class will give us to much, like the real world does
+	Sprint 3 user stories- one overlaps but posted
+	Tech lead- deals with integration, reviews etc. less coding tasks
+	Replaceability- To be a keepable member make code that allows you to be replaced
+	Midtem - Scrum guide, 5 dystfunctions, design patterns, next week!!!
+		OPEN BOOK/LAPTOP NO WIFI
+		Trivia question- usually simpsons/futurama/rick n morty
+	reviews - rank eachother hierachically, averaged upon collection of review for team function
+		360- not a review, but rather a personal growth memo
+		Abuse- firing the bottom is dysfunctional!!
+			Actually skews population dysfunctionally!!
+			Require rank order, but like comments
+	Employee agreements - Always read,in-case of performance abuse
+		!! You are allowed to strike out contract piece and send to hr!!
+			!! applies to any legal document!!
+	peter principle- everyone is promoted until incompetent	
+
+
+	
+
+Chapter 7 Adapter and Facade Patterns	
+
