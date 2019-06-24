@@ -121,8 +121,90 @@ what could be changed:
 			!! applies to any legal document!!
 	peter principle- everyone is promoted until incompetent	
 
+6/24 in class notes:
 
+	The Open/Close principle - Designs should be open for extension but not modification!!
+		Allows usage, but protects encapsulation
+
+	Decorators - Same super type as objects they decorate
+			Can have 1+ more of their own (wrapping)
+			Can be passed anywhere original could be
+			Adds behavior before/after delegating
+			Objects can be decorated at runtime
+				!!JAVA can only do this through inheritance!!
+					By extends {
+				!!Python has duck typing, compares methods == then it is the same type, no inheritance needed!!
+					Everything is an object in python
+						Methods have __call__()
+		Add additional responsibilities dynamically
+		alternative alternative to sub-classing
+			!!JAVA unfortunately requires inheritance to do this!!
+				!!milk will extend coffee...lol!!
+			JAVA I/O - essentially a stack of decorators on Reader.java
+	Factory pattern- Was in vogue, but now is old-hat, build details of creation using subclassing are encapsulated
+		Client doesn't care which type
+		Can return a variety of things at runtime
+		Can add types easily
+		If static can't subtype to extend
+		
+		Considered a creational pattern
+		Don't have to be abstract
+		
+	Dependency inversion princple - depend upon abstractions, do not depend upon concrete classes
+		High-level modules should not depend on low-level modules
+	!! No variable should hold a reference to a concrete class!!
+	NO method should override an implemented method of any of its base classes
+	Only derive from abstract classes
 	
+	Dependency injection - A technique where one object supplies dependencies for another object
+	
+		Dependency is a object that we can use
+		Supplying a method the functionality it needs from outside!
+			Using new services/classes is not allowed, but chosen
+			Dependencies are gathered elsewhere by lower classes
+			Done to decouple objects
+			
+		
+				
+				
 
 
+	Inversion Of Control - A BUZZWORD, a design principle where custom-written portions of a progam recieve the flow of control from a generic framework
+		Library vs framework: programmers call libraries, frameworks call you
+			Framework- the housing/ usage of libraries
+		Unlike traditional(custom calls libraries), framework calls custom code!!
+		
+	Abstract factory pattern - allows creating families of related objects decoupled
+		abstract factory calls concrete factories to produce chosen product, from client's requested things from abstract product factory
 
+		Abstract vs non
+			non: inheritance in java, same family of type, not needing new
+			abstract: composed seperately, made by new and passed
+			
+			** abstract factories are rarely used, not on test
+
+	Singleton Pattern - Always get only one previously created object from factory
+		I/O, Thread pools, drivers, preferences, dialog boxes etc.
+			Allows lazy initialization
+			
+			private empty constructor prevents inheritance, or implementation
+			doublecheck only one instanc by getter checking previous and calling its new
+				usually called getInstance()
+					can be made thread safe by synchronizing getInstance(), forcing thread blocking
+						prevents race case collision
+						but slower
+		Only one instance with global access
+		1. sync, what we did
+		2. eager creation, use static creation before startup rule to create new member once, thread safe
+		3.double-checking: 1, but check again before sync
+	volatie -javas solution to cache sharing problem during threading, forces out to main memory for visibility to all threads and blocking register loading
+		
+	Visibility - assures all threads use the same variable
+	Synchronization - Assures only one thread can write to a variable
+	Atomic - changes to all volatile variables are seen in main memorym reads and writes are made atomic for all reference variables except long and double, no thread can use part-way
+		Due to 64 bit in two registers
+		!! if any variable is bundled in operations is volatile, all other ones are straightly written to memory by cache, weird behavior of java!!
+				!! Don't do this shit in java, use scala to offload paralell things!!
+		!!volatile will not work on ++ operator, multiple ops == multiple threads!!
+	Recommended for OS Java Concurrency in practices helps with Java threading nastyness
+		
