@@ -207,4 +207,58 @@ what could be changed:
 				!! Don't do this shit in java, use scala to offload paralell things!!
 		!!volatile will not work on ++ operator, multiple ops == multiple threads!!
 	Recommended for OS Java Concurrency in practices helps with Java threading nastyness
+
+
+6/26 notes:
+	test:
+		5 shortanswers on topics we have discussed conceptual
+			ex: there are 3 phases of scrum, what are they called?
+	Command pattern - A behavior design pattern where an object is used to encapsulate all the arguments/data for a later command
+
+	Participants:
+		CLient - creates a command and designates a reciever
+		Invoker - holds command and at some point calls execute()
+		Command - creates an interface with execute()
+		Reciever - knows how to perform request
+	caller -> command: execute()<- concreteCommand: state, execute()-> reciever <-client ---------------------------/^
+
+		client is never notified, client doesn't know about processes of commands
+
+	Adapter pattern- converts interface of one class into another
+		connects, previously unusuable pairs of classes
 		
+		Two kinds:
+			1) objects - composition based
+			2) class - inheritance based
+		parts:
+			target- interface client calls
+			Adapter has opertaion method calling adaptee, implemented on target
+			Adaptee is called class/object
+				object version will have adapter contain adaptee
+				class's adapter will call adaptee
+	Facade pattern- provides a unified interface to a set of interfaces in a subsystem
+		called by client, calls specific interfaces, simplifies calling from client, adding more abstraction
+
+	Difference between adapter- adapter modifies an interface for usability, facade combines interfaces
+
+	Principle of Least Knowledge - Information of immediate relations should only be known
+		Allows decoupling, easy imports
+		Law of Demeter: methods may talk to
+			their own object
+			objects as params
+			objects instantiated
+			instance variables
+	Template method- Behavioral pattern that defines the skeleton of an algorithmn and sending them on to subclasses
+			Strategy pattern, but on algorithmn
+			Based on divided out abstract class
+		Recipes are a great example of this
+
+	Hooks- an abstract method left behind in case other things interface
+		overridden when used
+	Hollywood principle- don't call us we'll call you, low level hooks into system, high level calls at appropriate time
+		ex: Java Arrays.sort() calls compareTo() as strategies
+	Template is final, parts call interfaces
+		strategy->composition
+		template->inheritance
+		Factory is specialized template
+
