@@ -247,4 +247,132 @@ Logging requests- Crash recovery is important, to recover, a list of past method
 			Can save from a last stable checkpoint for expensive persistence
 			Invoker of our pattern stores used methods using store()
 				upon crash, load is called on invoker
-Chapter 7 Adapter and Facade Patterns	
+Chapter 7 Adapter and Facade Patterns
+
+	Adapter- Take a current inteface and enwrap it to fit the new responsibility
+	How the pattern works:
+		1) Client makes a request to the adapter by calling a method on it and using target's interface(Adapter's inteface)
+		2) Adapter transaltes the requested call into 1+ calls on adaptee using adaptee interface
+		3) Client recieves results not unfamiliar to usual request
+
+	Strict definition:
+		Adapter Pattern converts the interface of a class into another interface that clients expect. This allows classes to work together that normally could not due to incompatible interfaces.
+	
+	What it looks like:
+		CLient calls Target interface of adapter, Adapter handles request by calling request() towarrd adaptee interface, the adaptee handles a custom set of methods to produce a set of results equivalent, returns up the chain...
+	
+	Object vs Class adapters:
+		Class adapters use multiple inheritance(not possible in java), dapater interface then inherits Target and Adaptee so it can reach into both.
+	Pros: Object can adapt to any subclass
+	      Object uses more composition
+	      Class can override behavior
+	      Class doesn't need to reimplement entire classes
+	      Class can handle rapid changing classes
+
+	Cons: Class has to be specific to a class only
+	      Object can't easily handle changing sub-classess
+
+	Real-world examples:
+		Old-world enumerators: Java used to run entirely off of enumerations(stepping through collections by calling nextElement() without knowledge of order)
+		New-world iterators: Today java is moving toward Iterable(), with asking for hasNext() next() and remove() where next elements act like a stack.
+		
+		To fix these, we interface from enumerable to iterable by removing / adding calls through the adapter interface! Usually called EnumertaionIterator
+		!!Removed functionality like remove() can lead to exceptions upon calling, so developers be careful and document hard!!
+
+	Decorator vs Adapter: Adapter is usually a specific kind of decorator when using composition that calls between disparate types while a decorator deals with compatible types usually changing responsibility. Facde makes interface simpler.
+
+
+	Facade Pattern - Takes a complex subsystem and makes it easier by implementing a set of interfaces into one macro
+	Definition: Facade pattern provides a unified interface for a set of interfaces in a subsystem. Defines a higher level interface that makes the subsystem easier to use
+
+principle of least knowlegde - Reduce the amount of interactions between actions to a few 'close friends' or 'Talk only to your immediate friends'
+
+How to keep 'friend' objects low:
+	only invoke from: the object itself, objects passes as args, any object that makes this object, any components of an object
+
+	Principle forces asking objects to make requests for us
+
+Chapter 8 Template method pattern:
+	Template method: a method serves as an abstract template for an algorithmn where individual methods and pieces can be delegated to be changed on run-time by other interfaces/subclasses
+
+	Prevents duplication of methods, allows protection of information by decoupling methods, changes can be made easily piece-meal. Algorithmn is in one place! 
+	Definition: Defines a skeleton of an algorithmn in a  method, deferring some steps to subclasses. Template method allows subclasses to redefine certain steps without changing the structure.
+
+	Hooks- defaulted methods that can be offloaded/ignored from template between other libraries/classes
+	
+	How to use hooks- write method wanted to override, and it shall be done/ignored based on template class
+
+	Hollywood principle - "don't call use we will call you"
+		Prevents 'depencency rot' where high-level pieces and low-level components cause an unstable web of dependency
+			Leads to poor readability and testing/modification
+			Low level pieces hook themselves in to be called,causing dependency to only flow one direction
+		How it relates to template?
+			Template forces a Hollywood Principle, it calls delegated lower classes, not the other way
+
+	Real-world: The basis for frameworks, Java sort method delegates sort method by doing this
+
+Chapter 9 Iterator and Composite patterns
+	Keeping collections without exposing code
+	
+	Our problem:
+		A merger happened between two diner libraries, one implemented ArrayList, the other Array with specific dependencies
+		We want a menu for both, but both are incompatible except for main menu display
+	
+		We have a waitress object that can print menus and fetch if they are vegetarian
+			But each menu needs specific loops to iterate through the menu items!!
+				Adding diners, would be costly in looping!!
+	Solution: We create an object called an interator that will pass through any collection of objects using an interface!
+	
+	The iterator pattern - Relies on an interface called iterator that can call hasNext() and next() in order to scan through a collection of any kind
+		Calls Concrete iterator that handles a kind of collection if hook is needed
+		!! eliminate getters for menu items will expose code in original collections!!
+		!! Add iterator factory in menu!!
+		waiter/client class can then call factories of iterators of collections, and use them to step through items
+		
+	To make our example cleaner: use java.util.Iterator interface, ArrayList already implements iterate(), but array has no support, so we have to make it implemented
+	!! remove() is extended, so remove has to be crafted for array!!
+	Now the menu interface is responsible for populating the menu while iterator handles arraylist and dinermenuiterator adapts to iterator
+
+
+	Strict definition: provides a way to access the elements of an aggregate object sequentially without exposing the underlying representation.
+
+	Single Responsibility principle- A class should only have one reason to change
+		Allow only one way a class can change(one responsibility) two + responsibilities changes too often in order to decouple
+			Cohesion- measurement if a module supports a single purpose/responsiblity
+				In our example, we remove getItems() and instead apply to CafeMenu interface for more cohesion
+	Our new issue: if we add another menu each time, it becomes obtuse for the waiter/ess class, an approach would be to add a container for each menu
+		We really need an easily traversable tree
+
+	The Composite pattern: Allows to compose objects into tree structure to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions uniformly.
+
+
+	A menu tree, that itself can be used as a menu itself
+		Such as applying a print accross the whole thing
+		
+	The structure
+		A client calls component class
+			Component class depends on leaf and composite classes, leaves do ops()
+			while composites add, remove components and do ops as well as fetching children
+			!!leaves have no children!!
+			
+				In our example: client is waitress, component is menuComponent, menuitem is a leaf, menu is considered a child component
+			menu component cannot use getters, but interfaces them
+				throw exceptions
+			menu items, implement all getters and print
+			menus implement some getters, add/remove and print
+			print needs iterator to work properly
+				!!Trades cohesion for uniform transparent calls!!
+	Composite iterator- Very strict iterator, ensures that iteration is don and all children are included in iteration
+				 next method checks item on, if it has next, applies it to iterable stack along with its members, recursively calling each child
+				hasNext checks stack if empty, otherwise pops
+			!!So difficult because it is iterating externally!!
+			
+	Null iterator- If a read item has no iteration possible
+		There are two approaches:
+			1) return a null
+				Requires heavy-lifting outside iteration, for checking empty == null
+			2) return an iterator that always throws false
+				Best practice, shows iterator is stuck and done
+					Next returns a null, hasNext returns false, remove throws exceptions
+	Iterator and Composite combined: Allow a tree traversal with recursive efficiency on all items of similar family
+	
