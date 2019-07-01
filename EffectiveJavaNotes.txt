@@ -167,5 +167,61 @@ Item 9 		"Prefer try-with-resources to try-finally"
 			Multiple arguments require multiple finally{}!!
 				Looks awful
 			Can also throw itself while running ignoring error!!
-try-with-resources	Requires AutoClosable to run, but doesn't need multiple finally for multiple arguments and suppresses errors customly.
-				Catch works inside it too!!
+try-with-resources	Requires AutoClosable to run, but doesn't need multiple finally for multiple arguments and suppresses errors customly.Catch works inside it too!!
+
+Chapter 4: classes and interfaces
+	item 15 - minimize the accessbility of classes and members
+		API and implementation should be decoupled, the less known the better
+			Encapsulation - allow swapping and testing
+				allows paralell development
+			protected, private and public are java's mechanisms for this
+			top-level classes = package private and public
+			
+			private - member is accesible from declared top-class
+			package-private - member is accessible from any class in same package
+				!!This is default except for interfaces == public!!
+			protected- only accessable through subclasses of class it was declared
+			public- accessable from everywhere!
+
+			Tests can be made as part of package to gain package-private
+
+			!!instance fields of public should not be made private if possible!!
+
+			 decide on public api, make rest private, flip default if needed, but shouldn't often, if done often change encapsulation
+			!! if Serializable is used can leak members into api!!
+			
+		Static fields follow similar rules except exposure of constants to public is fine.
+			!!Must be immutable or primitive due to inheritance!!
+			!!arrays are mutable always!!
+			
+				One alternative is a public copy of a private
+				another is a public list to call that copies private
+		java 9: added module safety
+			module- grouping of packages
+				Protected by export declarations: public and protected, act like the originals
+				Rarely used, often can be made by rearranging the classes in packages
+				!! advisory, non-functional if a jar is added to class path!!
+					But unexported are enforced by the jvm
+	Item 16: in public classes, use accessor methods, not public fields
+
+		Degenerate classes - classes that only instantiate variables should not be public
+			These cannot benefit from encapsulation
+			Best practice OO believes they should be replaced by private fields with getters and setters
+				!! unless private, in which case less clutter is direct!!
+
+			Java often does this with awt
+		!!if you can't avoid it make it immutable!!
+
+	Item 17: minimize mutability 
+		Classes should be immutable unless there is reason not to
+			Why immutable?
+				Thread-safe, atomic, no need to copy(!!Don't clone!!), secure, shareable!
+			Why not?
+				Take up more space for each copy, could be costly, can't work in mutable usage
+			Why mutable?
+				performance of changes can be easier by a lot
+			
+		If you are stuck with mutable:
+			Make a companion immutable class if needed only
+			limit its mutability as much as possible
+						
