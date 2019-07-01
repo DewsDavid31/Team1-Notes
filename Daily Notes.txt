@@ -261,4 +261,106 @@ what could be changed:
 		strategy->composition
 		template->inheritance
 		Factory is specialized template
+Jul 1 2019:
+	
+	Iterator pattern - provides a way to traverse any collection, encapsulate the reader of said collectionso it doesn't care about typing/implementation
+		Aggregate- an instance tht pulls iterator from list
+		!!Enumeration has been replaced by iteration!!
+		
+	Single-responsibility rule - a module of code should only do one thing, and one thing very well!!
 
+		Known as high-cohesion
+			Can be measured by instance variable number(mutators)
+			Lower, the better
+	Composite pattern- allows you to make objects into tree form, allows trees to be treated like a whole object
+		Recursion-efficient
+		
+	Aggregation- the finite conclusion of composite pattern of all possible children, methods and etc. yet only allowing certain usages in certain nodes
+	
+	State- the combination of the value of all the variables in an object
+
+	state machines - very effective on saving memory
+			Made by set of legal states that operate like a graph flow
+	state pattern - allows an object to alter its behavior when its internal state changes
+		Will appear to change its class
+		Similar to strategy pattern, but using state at runtime
+		Good alternative to subclassing with composition at runtime
+		Alternative ot if/else forest
+	big picture: Context sets state onn state interface, state calls concrete states
+
+Getting a job:
+	The great american know who:
+		I've known people at jobs I have landed
+		Knowledge of people is best -> networking
+			1)Make a name for yourself in school
+			2)Let networked you are looking for a job
+			3)Maintain your GPA!!
+			4)LINKED IN, relied on heavily
+			5)MEETUPS, looked for in you hiring: in interest
+			6)Twitter, unfortunately following on tabs of tech industry
+		STOP
+			1)gaming, detrimental to income, has no professionals, doesn't hone my crafts
+			2)social media, same thing
+			3)watching things, same thing because not crafting
+			4)navel gazing/wasting time(amazingly valuable)
+			5)Becoming an expert at unpayable things
+		START
+			1)Learning about field's state: ACM,IEEE
+			2)Be relatable(smooth with laymen)
+			3)Being sweet + professional
+			4)Branching out languages(human + non) + Technology
+		Reasons
+			1) people are hired because willing to pay for solution
+			2) Be that solution
+		Before the job:
+			1)research the workplace's history + business decisions
+			2)research the competitors
+			3)compile strengths + weaknesses of competitors + workplace
+			4)check alignment of interests + morals
+			5) check turnover rate
+			6) check contracts and their questionable hiring states
+				1.stock options are worthless
+				2.promise of future is hard sell
+				3.holding decision on hire is dicey
+				4.shady wording of hiring rights avoid
+		MARKET
+			1) spin up cards
+				a. non school email
+				b. twitter, github, linkedin
+			2) Github must include schoolwork
+				a.have GISTS
+				b.refactor and test old work and post
+			3)Create a blog/GIST for the field maybe
+				!!gists should be short!!
+			4)Create/give a presentation or two of tech
+			5)Write a paper or two of tech
+				*could ask a professor to offload research
+			6)Resume will be filtered by HR's buzzword matcher
+				*5 seconds to catch reader's attention
+				*important things first
+				*look clean + glanceable
+				!! Never put address at resume!! -suggests commute issues
+				!! Don't use school email!!- suggests still collegiate
+				!! Dont have cute email/github handle!! -suggests you are a dude bro
+				*put in completion date of schooling
+				!! don't put required classes, put in electives!!
+				!! don't list IDE's!!
+				!! don't mention .exe's!!
+				!!DONT PUT IN objectives!!
+					*trajectory is only for seasoned in cover letter
+				*put in languages by experience
+				*put in github and linked in
+				*list substantial upper division work, here and on
+				*list SCRUM,TDD, SONARCLOUD, TRAVIS-CI/CD, LINUX, put on scrum roles + job roles you have done !!!not!!! responsibility
+				!! Keep resume to one page, +1 if seasoned!!
+				!!Be very careful about spelling and grammar and formatting from now on!!
+					!! NEVER WAFFLE FONT + FORMAT!!
+				
+		Your interview skills	
+				1) start with phone screen
+				2) online quiz skills
+				3) plan for half-full day
+				4) plan for group interview questions
+				5) have strong table-manners
+					!!helps interview lunches, coworkers!!
+			
