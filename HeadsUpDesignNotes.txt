@@ -375,4 +375,18 @@ Chapter 9 Iterator and Composite patterns
 				Best practice, shows iterator is stuck and done
 					Next returns a null, hasNext returns false, remove throws exceptions
 	Iterator and Composite combined: Allow a tree traversal with recursive efficiency on all items of similar family
-	
+
+
+Chapter 10: State Pattern
+
+	Our problem: We are working on a gumbball machine, converted and gutted to use a cpu to function and collect data
+	We are given a state machine diagram on how it should function
+		!! Actually called a state diagram!!
+	State machines 101:
+		1) define all states possible
+		2) create instance variable to hold current state
+		3) define values for each state(an enum might be good)
+		4) define all possible actions that happen to system
+		5) Create a class that can use conditional statements to find what methods are accessible in each state
+	This works great with conditional code, but gets hair on implementation, of new features so we encapsulate the states and methods into a state interface
+		To fix this we instead replace each state with an extension of the state class to be refrenced, that way we can add neew behavior easilty	

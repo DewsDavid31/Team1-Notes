@@ -363,4 +363,44 @@ Getting a job:
 				4) plan for group interview questions
 				5) have strong table-manners
 					!!helps interview lunches, coworkers!!
+
+
+	July 3rd 2019
+	DEMO DAY FIXES
+		meetings must have an agenda and goal
+		meetings must have a time limit 1-2hrs
+		p.o. must update on surpirses
+	Interviewing:
+		Start with a phone screen
+		Or a Quiz
+		After on-site for 1/2-day or full-day
+			Will be eating with a group usually
+				Need table manners
+					!!Don't order spaghetti lol!!
+		Arrive 15 minutes early, but don't enter
+		Bring a notepad, extra resumes
+		!!Follow up after on the same day, say thanks and if you can help!!!
+			Usually by email
+		!! Dress well, Sport jacket usually, eye contact, don't cross appendages, lean in, avoid nervous habit, avoid too strong deode!!
+		Interview them as well
+			You don't want to work anywhere, unless resume building
+			Checkout glassdoor
+				With a grain of salt bimodality
+			Ask about turnover + Why they work?
+			What can I do while employed?
+			Ask HR: benefits, retire + etc.
+		Where a masters is needed: HIGH FIELDS -> machine learning, etc.		!! Join computer science group of MSU Denver!!
+		Salary negotiation - we all have a salary range, but going above median, add in 'I deserve because'
+			!! Be the last laugh, usually arm wrestles otherwise!!
+			!! 6 months having no job is ok!!
+			!! some places are worse than not working in field!!
+			!! Need to explain gaps in resume but relevant because!!
+	
+			Avoid trailing edge tech, avoid area of no growth, churn+ burn
+			To gain new tech, subscribe to ACM for leading edge research
+			Following twitter of cs hotshots
 			
+		Dusty deck - legacy code that is too costly to update/not needed to update and certify
+		
+
+							
