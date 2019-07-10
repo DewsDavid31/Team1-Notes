@@ -390,3 +390,54 @@ Chapter 10: State Pattern
 		5) Create a class that can use conditional statements to find what methods are accessible in each state
 	This works great with conditional code, but gets hair on implementation, of new features so we encapsulate the states and methods into a state interface
 		To fix this we instead replace each state with an extension of the state class to be refrenced, that way we can add neew behavior easilty	
+
+
+Ch 11 Notes: The Proxy Pattern
+
+    Our problem: the gumball company wants a monitoring system to report state and inventory of gumballs
+
+    Our first solution:
+        Add location field and getLocation method to gumball machine
+        Add getters for inventory and a Gumball monitor class to report from composed machine
+        !! But it fails to actually monitor a gumball remotely!!
+    The Remotes Proxy: An object that acts as a local representative of a remote object
+        Remote Object- an object in the heap of another JVM
+
+    Java Remote Method Invokation
+        Provides a bridge to remote methods 
+    Remote methods 101:
+        A client object needs to call a client helper in otder to notify the service helper and then the service object
+            The client helper facade's as the service itself
+                In order to bridge the gap, the client helper must chuck the method and its args through a socket connection
+                Service helper unpacks the socket data and calls the method provided
+                Service object returns output, which gets packed and sent back by service helper
+    How the JAVA RMI does it:
+        RMI factorizes and builds helper objects for you:
+            Called the RMI STUB(client) and RMI SKELETON(service)
+            Includes socket networking, discovery, everything
+            !! ADD TRY/CATCH ON CALLS, CAN FAIL!!
+    How to use RMI:
+        1) Make remote interface - all remote calls
+        2) Make remote implementation - Actual remote device methods
+        3) Generate Stubs and Skeletons using RMIC on BASH
+        4) call rmiregistry on BASH to register client and service handshake
+        5) run RMI code once to instantiate
+
+    Remote interface:
+        1) extends Remote, no methods but acts as marker for RMI to use
+        2) Make all method calls throw RemoteException
+        3) !! MUST BE SERIALIZABLE!!
+    Remote implementation:
+        1) implement remote interface class
+        2) extend UnicastRemoteObject to work on RMI
+        3) make public blank constructor throwing RemoteException, allowing a throw in the case of startup failure
+        4) Register service using java.rmi.Naming:
+            try{
+                MyRemote service = new MyRemoteImp();
+                Naming.rebind("RemoteHello", service);
+            } catch(Exception ex){}
+    How remote service finds stubs:
+        The client gets stub object by doing a lookup call through RMI for the registered name in rmiregistry
+        This registry is on the server so it can be invoked remotely
+    Our solution: use RMI to help us notify the machine
+    

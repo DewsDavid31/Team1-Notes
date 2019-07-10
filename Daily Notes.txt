@@ -403,4 +403,196 @@ Getting a job:
 		Dusty deck - legacy code that is too costly to update/not needed to update and certify
 		
 
-							
+7/8 notes:
+	
+	Task planning:
+		Splitting the cards, ex: I want rooms to hold item as well as player
+			clarified: a room and a player must hold items
+			break:
+				1)Room holding items
+				2)Player holding items
+				Any refactoring?
+				How many hours?
+					Greater than 3, needs broken into subtasks
+				1)Room holding items
+				2a)Player contains list
+				2b)Player can test for existance
+				2c)PLayer can add()
+				2d)Player can remove
+					Clarified: unique or multiple same items?
+					Customer: more swords
+				1)Room holding items
+				2)Player contains list: 2
+				3)Player removal from list: 2
+				4)Player tests for item exists: 3
+					Debate on card size Room, 8<->3
+					Delibrated to 13 <-> 8
+					Broken up...
+				1a)Test exist
+				1b)test add
+				1c)test remove
+				1d)load yaml
+				1e)save to room
+				2)Player has list
+				3)player test exist
+				4)player add
+				5)Player remove
+					Customer: prefers save state mid-game fr
+om player
+
+					Clarified: save combined at item level	
+
+					Spike: we don't know how items can save
+					pause our sprint for spike budget
+				1)Room Test exist: 3
+				2)Room Test add: 2
+				3)Room test remove: 2
+				4) player test exist: 3
+				5) player add: 2
+				6) player remove: 2
+				7) item can load:
+				8) item can save:
+				SPIKE)how saving/loading goes into item
+
+					Spike reasearch becomes completed first
+				then cards are broken down and picked
+Class Notes:
+		
+	Interviewing continuted:
+		What to ask:
+			Why are you working here?
+			What is the working conditions?
+			What SE lifcycle is used?
+				Waterfall
+				AGILE: often impure
+					Ask what parts?
+					TDD?
+			What is the toolchain?
+			HR:
+				What are the benefits?
+				Health, vacation, retirement?
+		What they ask:
+			Computer Science principles:
+				Algs and Datastructures
+				Big O
+				Imperitive vs functional
+				internet has a compiled list
+			What you have done:
+				Specifics
+				Concrete examples
+				Say so if you don't have one
+				Ready to talk about accomplishments on resume
+					!! from STAR method of interview!!
+				Languages
+					When would you use an anonymous inner class in java?
+					What is a lambda?
+					What's a closure?
+					!!AIM CORRECTLY ON KNOWLEDGE!!
+				OO
+					What are the big 4?
+						Abstraction, Encapsulation, Inheritance, polymorphism
+					What is an interface?
+					What is a virtual method?
+					What is multiple inheritance?
+					Deep vs shallow copies?
+					Dependency inversion/ control
+					Difference between framework + library
+					Design patterns
+				SOLID-
+					Single responsiblity
+					Open-closed principle
+					Liskov substitution principle
+						objects should be replacable with instances of their subtype without changing code - interface not implement
+					Inteface segregation principle
+					Dependency Inversion Principle
+				OS-
+					Concurrency
+						Thread vs Process
+				Networks-
+					ipv4/ipv6
+					TCP vs UDP
+					Client/server vs p2p
+					cider..etc
+				Software engineering-
+					git, github
+						rebase, squash
+					agile manifesto
+					tdd
+					dry, yagni
+					ci/cd
+				Web-
+					MVC
+					ORM
+					Ajax
+		Questions:
+			Tough Questions: Test under stress and bogus
+				give process but you don't know
+			Why are manhole covers round etc...
+				looking for problem solving?
+			Strengths and Weaknesses...count these etc...
+				Know your stengths and weaknesses!!!
+			Why do you want to work here?
+				Get own creed/reason
+		Verbal Hints:
+			Speech is a part of thought, reflecting tones, feelings, etc.
+			!!Don't say "I feel like" EVER!!
+				Say "I think" or "I believe"
+				Instinct is useless here
+			!!Don't say "like" unless simile!!
+			!!Remove "um", "you know" "got"NEVER!!
+			!!Literally is useless!!
+			!!Irregardless is not a word, ethan!!
+			!!Don't say methodology!!
+				use method/approach
+			!!Data are plural, datum is singluar!!
+			!!Avoid jokes!!
+				Only on yourself
+			!!Be terse!!
+	Guerilla interviewing:
+		Looking for smart people for things to be done
+		Introduction
+		Recent project you worked on
+		Easy programming Quesiton
+		Recrursion/Pointer question
+		Any questions?
+	!!Watch out for desperation in start-ups!!
+	!!Bring a cheatsheet in-case!!
+	Ask for feedback at the end!!
+	Cracking the coding interview is a great resource, but dated
+	Some jobs have no hiring, but interview anyway for perspective and fairness	
+			
+			
+			
+	Certification is great, meticulous is a bad resume strength
+
+7/10:
+	
+	Effective java ch2 review:
+		Consider Static factory vs constructors
+			Parameters suck and lead to errors in overloading constructors
+			Most languages only allow one constructor anyway
+		Static factory can usually save resources by being singleton
+		Basis of singleton, flyweights, non-instantiable
+		Can return a subtype as well
+		Polymorphic, can do interesting things
+		Can be non-public
+		Can vary implementation
+		
+		Service-Provider framework: inject dependency by passing a factory in order to have provider create wanted object
+		java.util.serviceloader allows making api to factories in service loading framework
+		
+		Cons:
+			Cannot be subclassed
+			Not obvious in javadocs
+			Many different naming conventions
+				valueOf, getInstance, newInstance...
+			!!Even java inner code is inconsistant on naming!!
+		Telescoping is awful, but an approach
+		
+	Consider a builder when faced with multiple constructor parameters
+		Create an empty instance and have many sets
+		Builder pattern follows this
+		build() should be parameterless
+	Java 9 allows a type to extend itself in generics!!
+	!!always use private final in instance variables!!
+					
