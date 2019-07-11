@@ -595,4 +595,65 @@ Class Notes:
 		build() should be parameterless
 	Java 9 allows a type to extend itself in generics!!
 	!!always use private final in instance variables!!
-					
+
+7/11:
+	Prefer Dependency injection: insert our behavior from side-loading a behavior object or library
+		Allows flexibility while not brittle
+		Allows immutability
+		Works for all instantiation methods
+		Can pass a factory into a constructor
+			This is how generics work
+			Allows changed format in our code to still work
+		Use DI frameworks
+			what is DI?
+				Dependency injection, often libraries are created to handle this
+	Avoid creating unnecessary objects
+		Use literals or valueOf() whenever possible
+		Anything that is immutable
+		Anything that is stateless like adapters
+		use Boolean.valueOf() to not make a new true/false, because it is silly
+		Factories are a godsend to this
+			Pattern.compile is a costly state machine, using the same one will prove best
+			Object computations are costly due to auto-boxing, avoid at all cost for performance
+	Avoid memory leaking
+		null out all unused refs
+			this is because Java uses a reference counter garbage collector
+			!!but should be unusually used!!
+	Don't Finalizer ever ever ever
+		finally of try//finally is a destructor, finalize is not
+		Garbage collector almost never fills request
+		!!always close files!!
+		slow, not chained in order
+		!!Create your own suggested close method!!
+			Prefered approach is to implement AutoClosable interface
+				implements close() method
+				used with try-with-resources
+				
+Chapter 3: methods common to all objects
+	often these methods default to a mess
+	
+	.equals is a pain in the butt
+		Cannot be used when:
+			unique/singleton
+			Random
+			Superclass does better(collections)
+			Class is private and not used
+				Suggest using an assertionerror
+		.equals is not ==
+			== is reference + typing
+			.equals is content comparison
+			test for equivalence, not the same object
+			must follow:
+				reflexive x.eq(x) == true
+				symmetric x.eq(y) == y.eq(x)
+				transitive x.eq(y) == y.eq(z) then x.eq(z)
+		!!Arg must be Object o!!
+		!!must use @Override!!
+		!!only compare like and like!!
+		!!cannot take a generic, but would solve the like and like situation!!
+			Must be used if using map keys or sets
+		Inheritance issues:
+			comparing super values can turn non-symmetric on children because some contents will suddenly exist/vanish in children
+			Extension always f's up .equals, don't do it including parents
+			
+							
