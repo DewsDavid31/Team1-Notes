@@ -440,4 +440,121 @@ Ch 11 Notes: The Proxy Pattern
         The client gets stub object by doing a lookup call through RMI for the registered name in rmiregistry
         This registry is on the server so it can be invoked remotely
     Our solution: use RMI to help us notify the machine
-    
+Monitor is ran, grabs the proxies of each gumball machine and calls getState() on each proxy, each proxy forwards it's getState on the server-side skeletons which calls getState() on the gumball machines then down the line the call returns until the gumball monitor recieves it.
+to create a skeleton, the monitor must lookup and register a client on the other machine in order to work, similar to vnc requiring two installs.
+
+	Strict Definition: Proxy pattern provides a surrogate or placeholder bject for access to another object
+	Our solution is known as the Remote Proxy, a specific pattern of Proxy pattern!
+		In our case our proxy handled network access for ease!
+		
+	Structure:
+		Subject interface <---Proxy
+		\--------Real subject<--/
+		Real subject does heavy lifting, subject is an interface to the real, Proxy calls Real subject, both implememnt the subject interface calling request()
+		This allows Proxy to substitute the real subject fully and be called by an outside client!!
+	
+	VirtualProxy: Another proxy pattern where the proxy acts as a representative for a costly object that lazily creates concrete object when needed, then pipes requests directly.
+
+		A loading bar works this way for simplicity of using same calls, but allowing access before something is loaded fully
+		
+	Proxy vs Decorator:
+		Proxy represents while Decorator composes for behavior
+
+	Java's Proxy:
+		Java has its own support in java.lang.reflect 
+			Very flexible, allows creation on the fly
+			makes the api's on runtime, sometimes call dynamic proxy
+			
+			Structure:
+				Subject iterface has child proxy and RealSubject, proxy is provided by java and is split from the second part of a proxy,an InvocationHandler you must provide which uses the InvocationHandler interface, both using invoke(), this gets passed all method calls invoked in proxy, proxy still uses request()
+		
+	How to use it:
+		1) Create two invocationHandlers
+			These implement the wanted heavy lifting
+			InvocationHandler uses invoke to parse method call splitting into:
+				invoke(Object, method, args)
+				then we call on the Real object
+					return method.invoke(concrete object, args)
+					!! needs a try/catch usually for security, returning null!!
+					Check if legal methods first!!
+
+			
+		2) Write the code that instantiates the dynamic proxies
+			A tid bit of code is needed to auto-create these parts
+			
+			Object getOwnerProxy(Object object) {
+				return (Object) Proxy.newProxyInstance( person.getClass().getClassLoader(), person.getClass().getInterface(), new OwnerInvocationHandler(object));
+				uses factory passing classloader of subject and a set of interfaces it must implements and an invocation handler we provide, and the real subject constructor, this produces a proxy skewering all the above!
+			
+		3) Wrap wanted subject in the appropriate proxy
+			A proxy is needed to be accessed instead of a concrete object
+
+
+
+
+	Protection Proxy: A proxy that controls authorized access to parts of code, usually regarding ownership.
+				   
+	
+	Chapter 12: Patterns of Patterns
+		
+		Compound Pattern: Pattern that works with other patterns in a design
+		
+		Model-View Controller: 
+			View: Composite Pattern, set of windows and UI, allows input
+				Composites a set of ui elements and their usage in trees
+			Model: Observer Pattern, updates View and controller on changes of state
+				Considers other parts as observers
+			Controller: Strategy pattern, chooses behavior regarding states and input
+				Swaps its own behavior based on view	
+		Web-usage:
+			was used for browser/server model known as Model 2
+				Uses JSP and Servlet originally to use JSP to view, Servlet to control and the Database underlying as the controller
+			1) you make http request
+			2) servlet processes request and parses it
+			3) controller forwards control to view with response from Bean grabbing from database
+			4) View returns a page of request to client in http
+			!! Adds seperation in tasks and Production Responsibility!!
+			!! This was great because browsers and users were inconsistant on responsibility!!
+			
+	Chapter 13: Patterns in the real world!!
+	
+	Defintion of a design pattern: A pattern is a solution to a problem in context
+		Context - situation it applies
+		problem - goal attempted to achieve specific to context
+		solution - a general concept/design that accomplishes these
+	
+	General Rule: "If you find yourself in a context with a problem that has a goal affected by a set of constraints, then you can apply a design that resolves the goal and constraints and leads to a solution!"
+	
+	!!But needs to be a great solution that is repeatable!!
+		Must balance the goal and constraints well, kind of like an optimization curve
+		
+	Pattern Catalogs: compiled lists of families of patterns, first one was the GoF made by the Gang of Four
+	Terms for catalog:
+		Motivation - scenerio of problem, and how it is helped
+		Applicability- situations it can be used
+		Participants - classes + objects involved
+		consequences - effects pro/con
+		implementation - techniques needed and caveats
+		Classification - family/category
+		intent - abstract
+		structure - uml or other diagram of pieces
+		Collaborations - interrelations of each piece
+		sample code- example, usually in difficult pieces
+		known uses- today's usages
+		
+	How do you create Patterns?
+		They are discovered and very rarely. You have to have certification in usage, and also have a written catalog piece as well as 3+ uses in real-world solutions that are satisfactory
+	
+	When solving, try to KISS, not just applying a design pattern
+	Are not a magic bullet, still need work
+	Often refactoring time is where it is thought to be added
+	Remove patterns if too complex, or too many cons
+	Don't use it unless your code will need it
+		This is all dependent on experience and knowledge of patterns
+	Use the vocabulary of design patterns for easier documentation, design meetings and naming conventions.
+		!!Beware though, make it succinct, precise and complete!!
+		
+	Anti-patterns: Finding the incorrect approach on accident
+	
+		Cataloged to prevent tempting pitfalls!!
+		
