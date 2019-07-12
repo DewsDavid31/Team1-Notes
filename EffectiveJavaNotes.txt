@@ -224,4 +224,72 @@ Chapter 4: classes and interfaces
 		If you are stuck with mutable:
 			Make a companion immutable class if needed only
 			limit its mutability as much as possible
-						
+	Item 18:
+
+	Item 53: Use varargs judiciously
+		Variable arity method- method that accepts varargs
+			Creates an array the size of the arguments, packs the args in said array then passing into said method
+				Used for 0+ argument overloading
+				!!DO NOT CHECK FOR 0 ARGS and throw!!
+					fails runtime, ugly
+					Solution, have arg 0 be a regular argument
+			Syntax: method(type... args){
+	
+	Item 54: Return empty collections or arrays, not nulls
+		Never return a special case null, this requires another piece to interpret and handle a null situation(ex: if empty => null)
+			If this is too costly to return empty collection, return the same reference each time!!
+ 	Item 55: Return optionals judiciously
+		A third option of returning when otherwise impossible: Optional<T> can contain a single value also including nothing
+			Basically a forced version of returning an empty collection
+			!!doesn't use collection<T> but could in principle!!
+			ex: extends optional<E>
+				return Optional.empty() or Optional.of(value) as factories of Optionals
+			!!But don't use it as a panacea!!
+			!!Don't use on boxed types,undefined behavior except with:!!
+				Boolean, Byte, Character, Short, Float
+			!!Never us as a key or element in a collection!!
+	Item 56: Write doc comments for all exposed API elements
+		If an API is usable from outside, it must must must be documented
+		Were done by hand, which became arduous
+		Javadoc made it automated, not officially part of java but widely used
+		
+		To doc properly:
+			1) Make a doc comment before each exported class, interface, constructor, method and field declaration
+			2) Doc comment for methods get a succinct contract between method and client
+				States what it does, not how!!
+				Preconditions - things that must be true to invoke method
+				postconditions - things that will be true after invoking method
+				side-effect - change made in state of system not required to achieve post-conditions
+				MUST INCLUDE:
+				1st sentence is a summary description !!beware, auto-ends at first period with whitespace!!
+				use 3rd person declaritive, returns a ball
+				
+				@return <has punctuation>
+				@param 
+				@throws
+				 all as full sentences including @word
+					@code prevents html parsing, and shows in code font
+					Allows examples
+				@implSpec showing self-use patterns if using inheritance
+					contract between method and it's subclass
+					needs -tag "implSpec:a:ImplementationRequirements:"
+					to use as of java 9
+				@literal operates like code, minus the font to allow <>!&
+				@inheritDoc can inherit documentation, otherwise if unknown, the javadoc has a search algorithmn for the most applicable doc
+				
+			3) Ensure they work in source code and generated documentation
+			3.5) Document serialized form, if it has one
+			4) Change any duplicate summaries that are the same
+			5) If generics or generic, document all type parameters
+			6) Add all constants if Enum
+			7) If annotation type, document all the members
+			8) Always document thread safety of statics
+			9) Doublecheck web pages made b javadoc
+			
+Chapter 9: General Programming 	
+
+	item 57: Minimize the scope of local variables
+		Increases reliability and accessibility of classes to members
+
+	item 58: prefer for-each loops to tranditional for loops
+							
