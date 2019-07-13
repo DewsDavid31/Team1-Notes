@@ -292,4 +292,79 @@ Chapter 9: General Programming
 		Increases reliability and accessibility of classes to members
 
 	item 58: prefer for-each loops to tranditional for loops
-							
+		For-each loops get rid of clutter
+		Handle collections without dealing with details
+		Better at nested iteration- handles outer loop calls to not double-count like you naturally want to with a regular for loop
+		when you can't use for-each:
+			1)Destructive filtering: popping fails to work
+			2)Transforming: Mutating elements doesn't work, need list iterator and index instead
+			3)Paralell iteration: ensuring collections are at the same spot in a call, not entirely reliable to customly do in for each
+				!!Use for loop instead, but beware nesting issues!!
+			!!For each requires an object to be a collection<T> or an interable object, to do so you must write implementing iterable!
+	item 59: Know and use libraries
+		Items like random number generators are hard to test, and verify			It is best to just use a well known, expert library
+			!!ThreadLocalRandom is better than MAth.Random!!
+				Better random + faster after java 7
+			Also saves time, and coverage
+		When to not use a library?:
+			Only when the library is not specialized enough
+			!! familiarize yourself with libraries!!
+	item 60: Avoid float and double when exact answers are required
+		We learned this in Arm assembly, float and double of non power 2 numbers are guesses, and inaccruate
+		
+	item 61: Prefer primitive types to boxed primitives
+		Java has primitve values and referenced values: Integer, Long...
+		
+		Differences:
+			Prims: only have values, less costly
+			Boxed: reference a value, can be null
+				!!Beware auto-unboxing in <= operations, can change false -> true!!
+			!! == is an identity comparison, not a value!!
+			!!NEVER USE ON BOXED!!
+			!!Beware unboxing a null ref Box!!
+			!! Dont mix prim and box!!
+			
+	item 62: Avoid strings where other types are better
+		String is godawful at any other type, if possible and not actually text, convert it stat!!
+						
+		!! Don't use for aggregates and enums!!
+
+	item 63: Beware the performance of String cat
+		+ is made convenient for immutable concatenation
+		but is in O(n^2), which is fricking awful
+		!!Use StringBuilder instead!!
+		Use + for cognitive load if a few strings!
+	
+	item 64: Refer to Objects by their interfaces
+	
+		Always instantiate as interface, not concrete when decoupled
+		
+	item 65: Prefer interfaces to reflection
+		Reflection allows access to arbitrary classes:
+			You can gain constructor, method and field instances on runtime
+			done by using built-in .invoke()
+			!! bad for the reasons:!!
+				1) can't check compile time exceptions
+					Odd race cases by reaching in
+				2) code looks nasty
+				3) invoke is unreliable in speed
+			Good if very limited: if you can't reach any other way
+				can act as a testing harness of runtime items
+				
+	item 66: Use native methods judiciously
+		native methods are written in other languages such as c or c++
+			!! Don't use them for performance!!
+			past Java 3 JVM was no longer necessary to use for speed
+			Since then most libraries evolved beyond native!!
+			less platform friendly and memory issue related
+	item 67: optimize judiciously
+		1) most issues come from obsession with efficiency
+		2)small efficiencies are not effective
+		3)don't do it until you need it
+
+		Strive for quality over speed!!
+		Strive for flexbility over limiting for speed
+		consider the performance concerns of api however
+			But dont warp api for it!!
+		Be sure to measure gains from optimizing
+		 			
