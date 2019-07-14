@@ -224,7 +224,54 @@ Chapter 4: classes and interfaces
 		If you are stuck with mutable:
 			Make a companion immutable class if needed only
 			limit its mutability as much as possible
-	Item 18:
+	Item 18: Favor composition over inheritance
+			Violates encapsulation
+	Item 19: Design and doc for inheritance or else prohibit it
+			When not encapsulated, doc it
+	Item 20: Prefer interfaces to abstract classes
+			interfaces are better to maintain and add 'mixin' functionality, like comparable
+	Item 21: Design interfaces for posterity
+			Beyond Java 8, default methods are constructed for interfaces, but even so default implementations can break its usage,so design carefully with this in mind.
+
+	Item 22: Use interfaces only to define types
+			Constant interface is a poor feature that only stores static constants, allows some details to be exposed in api
+			
+	Item 23: Prefer class hierachies to tagged classes
+		tag classes have a field indicating the type of instance
+		verbose, error prones and just plain awful
+		don't use it
+	Item 24: Favor static member classes over nonstatic
+			
+Chapter 5: Generics
+	Item 25: 
+	Item 26: Don't use raw types
+	Item 27: Eliminate unchecked warnings
+	Item 28: Prefer lists to arrays
+	Item 29: Favor generic types
+	Item 30: Favor generic methods
+	Item 31: Use bounded wildcards to increase api flexibility
+	Item 32: combine varags and generics judiciously
+	Item 33: Conisder typesafe heterogeneous containers
+	Item 34: use enums instead of in constants
+	Item 35: use instance fields instead of ordinals
+	Item 36: use enumset instead of bit fields
+	Item 37: Use ENumMap instead of ordinal indexing
+	Item 38: Emulate extensible enums with interfaces
+	Item 39: Prefer annotations to naming patterns
+	Item 40: Consistently use override notation
+	Item 41: Use marker interfaces to define types
+Chapter 7: lambdas and streams
+	Item 42: Prefer lambdas to anonymous classes
+	Item 43: Prefer method references to lambdas
+	Item 44: Favor use of standard function interfaces
+	Item 45: Use streams judiciously
+	Item 46: Prefer side-effect-free functions and streams
+	Item 47: Prefer collection to stream as a return type
+	Item 48: Use caution when makings streams paralell
+	Item 49: Check parameters for validity
+	Item 50: make defensive copies when needed
+	Item 51: design method signatures carefully
+	Item 52: use overloading judiciously
 
 	Item 53: Use varargs judiciously
 		Variable arity method- method that accepts varargs
@@ -368,3 +415,192 @@ Chapter 9: General Programming
 			But dont warp api for it!!
 		Be sure to measure gains from optimizing
 		 			
+item 68: Adhere to generally accepted naming conventions
+  Identified by the JLS
+  web domains in reverse: com.google
+  components lowercase rarely number
+  only oracle can use java. or javax.
+  hierachal, domain can have subpackages
+  methods camel
+  classes caps
+  constants all caps
+  Types are standardized such as <T>
+ interfaces often singular with able
+ Classes singular
+ libraries/packages plural
+
+
+Chapter 10: exceptions
+  item 69: use exceptions only for exceptional conditions
+     dont use them to control flow, it slows jvm and makes code brittle
+    can mask bugs, maintenance awful
+    could be faster but not update proof and bad encapsulation
+
+ item 70: use checked exceptions for recovery and runtime for code errors
+
+   java gives 3 throwables: checked exceptions, runtime exceptions and errors
+     as a part of api standards checked must be programaticañly handled in catch
+   !!dont just catch and ignore!!
+   unchecked dont handle because logic error
+       usually as a punishment for not following api
+         !! must subclass RuntimeException if unchecked!!
+         !! dont subclass exception only, confusing!!
+
+  item 71: avoid unnecessary use of checked exceptions
+      Extremely limiting with streams past java 8
+      Puts huge burden on future devs
+      !!only use if cannot be prevented by api, and user cannot take precautions!!
+       alternative is returning an optional, but gives no info on crashing
+       splitting catch into detecting throwable and throwing can make easier to use, but confusing
+
+
+  item 72: favor standard exceptions
+       java library has highly reusable exceptions, use them well and appropriately according to tables
+
+  item 73: throw exceptions appropriate for abstraction
+      catch lower dependency exceptions and translate them to make sense in abstraction!
+      Chaining is an alternative where upper dependency has a getter for other exception
+       !! handle them in lower if possible, if not use translation to prevent muddying with translation!!
+
+  item 74: document exceptions thrown by each method
+       always declare each thrown individually and javadoc it with @throws except main, is only called by vm
+   !! document but do not doc throws unchecked!!
+        shows to dev that unchecked is used
+  !! if multiple of the same throw, put into class doc comment instead!!
+
+
+  item 75: include failure information in detail messages
+    by default, unchecked will stack trace returning toString(), thus make this toString() as detailed as possible to be testable for debugging
+       contain all parameters, values, an fields that helped err
+        !! do not include personal/password info!!
+      !! make it terse and reference docs for devs!!
+      a great way: make a builder/ factory for failure capture info
+
+
+  item 76: strive for failure atomicity
+      a failed method should recover to its preinvokation state
+      called failure-atomic
+         immutability is failure atomic
+         mutable needs a check-before invoke pattern
+         another approach is reordering steps so failures happen before a write
+         another approach is to copy and keep as a backup
+         synch errors cannot be recoverable!!
+         avoid this if it is too costly or cognitively heavy
+
+
+
+
+  item 77: don’t ignore exceptions
+
+       dont leave a catch block empty, duh
+  item 78: synch access to shared mutible data
+        synch forces a single-thread pipeline
+        reading is atomic by jvm, but writing ops are not, if mutating a shared register/variable please use synch
+        !!dont use thread.stop for blocking, it is unsafe!!
+        !!to block, use a boolean read which is atomic!!
+          bools are atomic r/w
+          !! but warning, uncertain about optime, could be slow!!
+              To fix use liveness hoisting:
+                  make boolean start/stop handled synchronously for speed as methods (requestStop stop-requested)
+                      still slow on certain bytecodes
+            To fix again: make stopThread volatile for forcing r/w on stopRequested field
+             !!!Beware, non atomic ops like ++ in volatile stall!!
+             java concurrent has robust solutions for this
+             avoid sharing if possible!
+
+
+  item 79: avoid excessive synch
+
+        !!never use synch on polymorphism!!
+             can lead to undefined behavior on op calculations
+             called an alien method, cpu is horribly confused how to pipeline it
+             concurrent collections can handle this by creating immutable copies
+              Do as little work and turn alien methods into open calls(put before sync)
+            Doc your method isn’t threadsafe unless deadsure
+
+  item 80: prefer executors, tasks and streams over threads
+      these are better in every way after Java 7
+       threads are too coupled with tasks and execution
+       executors handle fork-join problems excellently
+
+  item 81: prefer concurrency utils to wait and notify
+       wait and notify are difficult but as of java 5, concurrent handles this easily
+           very fast in comparison
+           also holds a set of locking behaviors and cycling
+           Some legacy code can only use wait/notify
+               never invoke wait outside of loop idiom
+                   threads not guaranteed to unblock from wait, so a loop is needed
+                   test after waiting to wait again
+                    very low level, avoid this
+
+  item 82: doc thread safety
+
+         synchronization modifier is not enough, too much assumptions
+              document what level of concurrency is allowed
+              1)immutable- perfectly safe
+              2)uncoditionally threadsafe- mutable but can be use concurrently
+              3)conditionally threadsafe-
+some methods need external sync
+              4)not threadsafe- mutable, needs volatility/sync of areas
+              5)thread hostile- breaks anyway
+        doc these in class doc comment
+        factories must doc products safety
+       always make lock fields final
+
+
+  item 83: use lazy init judiciously
+      optimization of not eagerly instantiating, can fix circular logic
+       trades class creation cost for access cost
+       use only when needed for efficiency
+       !! if needed use lazy init holder idiom!!
+             allows low cost access
+       !! use double-check idiom on accessing instance fields!!
+              Less prefered, basically double check singleton, use first approach modified with volatility for often access
+
+  item 84: don’t depend on thread scheduler
+        platform specific, reliability may vary
+        better to make runnable threads <= processor number forcing running threads into ground
+            done by pruning threads to do small work and get more each
+            dont use thread.yield, makes only work on local machine
+
+Chapter 12: serialization
+
+  item 85: prefer alternatives to java serialization
+
+     serialization was thrown in as a buzzword item and proved to provide too much security exposure to overly long serializing calls and attacks in between serialization
+     Just dont deserialize, ever if you want security
+      other libraries avoid this at the cost of atomic, and less object support
+      if forced to use java’s only deserialize when data is whitelisted
+
+  item 87: consider a custom serialize form
+      consider if api is simple enough to stick, if it is then use readObject for security
+      otherwise if logic and physical are not the same can become costly
+      can blow the stack if done defaultly on complex object
+      declare a uid for each serial class for ease
+      allows compatibility to original object
+  item 88: defensively write readObject methods
+      effectively a public constructor that takes bytestreams
+     can create impossible or zombie objects, use extreme care
+     defensively copy to prevent rogue appending to current copy
+
+  item 89: prefer enum types to readResolve
+
+      requires transient since pointers explode after returning singleton
+      a stealing malicious caller can hide its own reference in deserialized if not transient and has control
+      readResolve should be used for runtime protection while enum requires premade items
+     be careful about privacy of readresolve
+
+  item 86:implement serializable with great caution
+     freezes the api, since older api’s only play nice in default form from then one
+      has to handle a slew of bugs and security holes
+      tdd skyrockets with serializing new updates
+      !!never inherit the serializable bad behavior!!
+      composed classes must never use it!!
+            pointers get messy in the heap
+
+  item 90: consider serialization proxies over serialized instances
+    if followed readresolve fixes, allows a highly secure proxy pattern
+   also allows some fields to be immutable and more secure
+   !! doesn’t work if cant extend to user, doesnt work on circular graphs!!
+
+
