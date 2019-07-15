@@ -656,4 +656,10 @@ Chapter 3: methods common to all objects
 			comparing super values can turn non-symmetric on children because some contents will suddenly exist/vanish in children
 			Extension always f's up .equals, don't do it including parents
 			
-							
+
+	july 15th
+		
+		creating a hashcode:
+			use 17 as a starting value
+			add multiples of 31 with sumnation with attributes
+									
