@@ -243,11 +243,26 @@ Chapter 4: classes and interfaces
 	Item 24: Favor static member classes over nonstatic
 			
 Chapter 5: Generics
+	
+	
+	
 	Item 25: 
 	Item 26: Don't use raw types
+		unbounded wildcard <?>:
+		AVOID AT ALL COST
+		allows any type through
 	Item 27: Eliminate unchecked warnings
 	Item 28: Prefer lists to arrays
+		Arrays are covariant while lists are not
+			arrays can be inherited by super, while generics cannot
+			
 	Item 29: Favor generic types
+		Typing in Java is a monolith of complexity
+		Python, every variable is considered a reference
+			Compatible if methods can be called the same
+	Had to add many features to create Object and cast to correct type, was awful at the start.
+	Generics have sets of parameters types used
+		Ex: List<String>
 	Item 30: Favor generic methods
 	Item 31: Use bounded wildcards to increase api flexibility
 	Item 32: combine varags and generics judiciously
@@ -441,6 +456,7 @@ Chapter 10: exceptions
    java gives 3 throwables: checked exceptions, runtime exceptions and errors
      as a part of api standards checked must be programaticañly handled in catch
    !!dont just catch and ignore!!
+
    unchecked dont handle because logic error
        usually as a punishment for not following api
          !! must subclass RuntimeException if unchecked!!

@@ -663,3 +663,31 @@ Chapter 3: methods common to all objects
 			use 17 as a starting value
 			add multiples of 31 with sumnation with attributes
 									
+
+July 18 2019:
+	Sometimes you gotta go against best practice, but comment as to why
+	
+	Prefer class hierarchies to tagged classes when need to inherit
+		verbose, error-prone and inefficient hold-over from C++
+		Uses a member to determine which pieces of it are used, good god
+		!! If you are diving into if/else or switch trees, you did something BAD!!
+		Abstract base class works better in this case
+	Use function objects to represent strategies
+		Java is late to the game -> python has best support to passing methods
+	Favor static method classes over non-static
+		4 kinds of nested methods:
+			1)static
+			vvvv	inner classes vvvv
+			2)non-static
+			3)Anonymous
+				Has no name, not composed into class
+				Declared and instantiated at same place
+					can make new class as an argument with {
+					inside bracket, we define the class with single methods
+					
+			4)Local
+				runs within its local thread
+		Prevents exposure of pieces inside
+		
+
+
