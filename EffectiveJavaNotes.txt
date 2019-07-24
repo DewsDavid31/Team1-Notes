@@ -255,7 +255,10 @@ Chapter 5: Generics
 	Item 28: Prefer lists to arrays
 		Arrays are covariant while lists are not
 			arrays can be inherited by super, while generics cannot
-			
+			very small situations where arrays are better
+			Arrays are reified, elements are not checked until runtime
+			Generics use type erasure, causing a check on compile time!	
+				
 	Item 29: Favor generic types
 		Typing in Java is a monolith of complexity
 		Python, every variable is considered a reference
@@ -264,30 +267,116 @@ Chapter 5: Generics
 	Generics have sets of parameters types used
 		Ex: List<String>
 	Item 30: Favor generic methods
+		Also type-check at compile time unlike other mismatched methods
+			!!Must declare generic used in start of signature!!
+			Similar to c++ templates, but less terse and only one
 	Item 31: Use bounded wildcards to increase api flexibility
-	Item 32: combine varags and generics judiciously
-	Item 33: Conisder typesafe heterogeneous containers
-	Item 34: use enums instead of in constants
-	Item 35: use instance fields instead of ordinals
-	Item 36: use enumset instead of bit fields
-	Item 37: Use ENumMap instead of ordinal indexing
-	Item 38: Emulate extensible enums with interfaces
-	Item 39: Prefer annotations to naming patterns
-	Item 40: Consistently use override notation
-	Item 41: Use marker interfaces to define types
-Chapter 7: lambdas and streams
-	Item 42: Prefer lambdas to anonymous classes
-	Item 43: Prefer method references to lambdas
-	Item 44: Favor use of standard function interfaces
-	Item 45: Use streams judiciously
-	Item 46: Prefer side-effect-free functions and streams
-	Item 47: Prefer collection to stream as a return type
-	Item 48: Use caution when makings streams paralell
-	Item 49: Check parameters for validity
-	Item 50: make defensive copies when needed
-	Item 51: design method signatures carefully
-	Item 52: use overloading judiciously
+		To get around a concrete generic not being a child of generic, we can extend a member to it, since a generic cannot be extended
+			use Thing<? extends E> source
+			!!this is sucky, uses self-extension to get around!!
+			Called a producer, extends itself
+			Consumer goes other direction <? super E>
+				!!This is the dumbest syntax in the universe!!
+			mnemonic: PECS: producer exteds, Consumer supers
+			Do not use wildcard return types, Streams are better!!
+				May require client to check types
+	Chapter 6 Enumerations and Annotations:
 
+	Item 32: combine varags and generics judiciously
+		Too much can hamper cognitive load		
+	Item 33: Conisder typesafe heterogeneous containers
+		Can be an alternative
+	Item 34: use enums instead of int constants
+		Integers are awful to represent
+		Java has strong Enumerations with its own classtype
+			can't extend but can implement interface
+			Enums are final
+			Compile-time type check unlike ints(c++)
+				C++ counts stupidly with enums
+			Can't pass or assign incorrectly
+			Can call constructors
+			private variables and methods can be nested
+	Item 35: use instance fields instead of ordinals
+		they are terrible
+	Item 36: use enumset instead of bit fields
+		Won't touch them unless using OS but bit fields are confusing and hard to implement using bit math
+	Item 37: Use ENumMap instead of ordinal indexing
+		Better but we still won't use these
+	Item 38: Emulate extensible enums with interfaces
+		
+	Item 39: Prefer annotations to naming patterns
+		JUnit uses these exclusively, also forces the compiler to check for overriding
+	Item 40: Consistently use override notation
+		May accidentally run into override issues and other testing issues
+	Item 41: Use marker interfaces to define types
+		Polymorphism by adding new types to guarantee usage, you can mark the class for usage such as Serializable
+
+Chapter 7: lambdas and streams
+		Assertions
+			Java has keyword, but are the worst possible
+				Can litter code, and be ignored by jvm
+				have to be enabled by -ea
+					another way in only one class
+					static {
+						ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
+}
+					doesn't work in main...
+			Historic reasoning was taxing of speed
+				With current-day standard of assertion is better
+		Maintain consistancy
+		Java- set is a bad word
+			Return a copy of mutable data, forcing pass by value
+			Thankfully, objects are fast in java
+				use varags if same
+				form is ...
+			Consistant naming conventions
+			
+			
+		
+	Item 42: Prefer lambdas to anonymous classes
+		Function better, not trailing edge
+		Not callable, don't use namespace
+	Item 43: Prefer method references to lambdas
+		Less clutter, better readability
+	Item 44: Favor use of standard function interfaces
+		Standard interfaces are better tested and tried-and true
+	Item 45: Use streams judiciously
+		Streams are good, but cause serializable issues and are counter-intuitive if used often
+	Item 46: Prefer side-effect-free functions and streams
+		Side-effects cause coupling, which is bad
+	Item 47: Prefer collection to stream as a return type
+		Collections have better support for returning
+	Item 48: Use caution when makings streams paralell
+		Paralellism is hard to support with java
+	Item 49: Check parameters for validity
+		Check parameters for vailidity, preconditions, postconditions and variance
+			Program defensively
+			Method may die
+				Sometimes even errors can be consumed
+				Undefined behavior
+			Throw and exception when you can/need
+		
+	Item 50: make defensive copies when needed
+		Assume the worst of your class's clients
+			make private #1 priority
+		Copy vs. DeepCopy:
+			Copy - first level of dependencies
+			DeepCopy - entire tree is copied
+		Pass by ref + value cause issues with this
+			C/C++ allowed control of value/ref passing
+		Final parameters- make sure that value/ref not updated in methods or reflection
+		Beware gets- allow others to have references, allowing mutability on accident
+		Date object- in java is stupidly mutable, when dates themselves are immutable, it's a certain date!!
+		
+	Item 51: design method signatures carefully
+		Design signatures carefully
+			Good names for intention
+			Short parameter lists
+		
+
+	Item 52: use overloading judiciously
+		Shorter signatures are easier to read and use!
+		use builders if you can or varargs!
 	Item 53: Use varargs judiciously
 		Variable arity method- method that accepts varargs
 			Creates an array the size of the arguments, packs the args in said array then passing into said method

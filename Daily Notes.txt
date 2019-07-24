@@ -690,4 +690,29 @@ July 18 2019:
 		Prevents exposure of pieces inside
 		
 
-
+7/22:
+	Reflection: the ability for code to read its own flow/change instructions on runtime.
+		First was made to prevent looping and hanging in branching
+		We use these today for asking for properties at runtime	
+		Allows mock objects, brand-new objects at runtime
+		Used all of the time for unit testing!!
+		Exmaples in java
+			JUnit, Spring(web), Struts(objects), Hibernate(objects/db)
+		can get: classes, inheritance, methods, constructors, fields, mofidiers
+		can invoke methods and constructors
+		can mutate fields and modifiers
+		can't add/delete brand new classes, fields or methods
+			Other languages can, extremely dangerous
+		what you need:
+			reflect.modifier, reflect.field, reflect.method, reflect.member...
+		.getClass() gets base class of object, while .class() does the same for a class
+		Class.forName() returns class base by String of name in jvm runtime
+		returns as class type
+		getDeclaringClass() will give class tree nested by $
+		getEncolsedClass() gives tree of runtime packed classes by $
+		.getModifiers() returns modifiers
+		.getDeclaredFields() returns instance variables
+		.setAccessible(true) allows mutation
+			!!Allows private final integers to be changeable unless delcared before runtime by optimization!!
+			Because literals are replaced by assembler's substitution
+			
