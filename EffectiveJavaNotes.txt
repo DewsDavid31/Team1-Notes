@@ -377,6 +377,10 @@ Chapter 7: lambdas and streams
 	Item 52: use overloading judiciously
 		Shorter signatures are easier to read and use!
 		use builders if you can or varargs!
+		overloading is at compile time, override is runtime
+			This causes unexpected results
+		Don't do it by type...
+		Override with inheritance is preferred if possible
 	Item 53: Use varargs judiciously
 		Variable arity method- method that accepts varargs
 			Creates an array the size of the arguments, packs the args in said array then passing into said method
