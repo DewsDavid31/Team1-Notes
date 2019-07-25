@@ -332,22 +332,101 @@ Chapter 7: lambdas and streams
 			Consistant naming conventions
 			
 			
-		
+Chapter 8: Streams and Lambas
+	New feature of Java
 	Item 42: Prefer lambdas to anonymous classes
-		Function better, not trailing edge
-		Not callable, don't use namespace
+		Used to use anonymous classes to avoid naming + making on spot
+			Both avoid cluttering namespace
+			But very wordy and unreadable
+			-> signifies a lambda
+			Syntax: (params) -> function used on it
+			Allows functionality without extra class usage
+				Perfect for template/strategy
+			Alanzo Church proved all turing can be done with lambdas 				But slower than nards
+				! function is a minute long process
+			History:
+				Anonymous classes
+				Method references
+				Lambdas(today)
+			Can still refer to them as parameters
+				Refered to as first-class objects
+					Returnable, Storable, Passable
+					Types are applied by instantiation of ref
+					compiler discovers types
+						if not, compiler complains
+		Want them to be short if you can
+			Types of lambdas:
+				Static- same as static method, most common
+					ex:
+					str -> Integer.parseInt()
+					Integer::ParseDouble
+				bound- Specify the object in method reference
+					Clamps return type by using prexisting variable
+					ex:
+					Instance then = instant.now();
+					t -> then.isAfter(t)
+					Instance.now()::isAfter
+				unbound- recieving object in parameter
+					ex:
+					Type determined by passed things
+
+					str -> str.toLowerCase()
+					String::toLowerCase
+				Constructors
+					() -> new Map()...
+				LRU Caching: Python doesn't optimize recursion, use this to fix that when it gets bad in lambdas
+				
 	Item 43: Prefer method references to lambdas
 		Less clutter, better readability
+		Also easier to pass around
+		
 	Item 44: Favor use of standard function interfaces
 		Standard interfaces are better tested and tried-and true
+		43 total in Java, 5 basic types derived from:
+			1) Operator
+				Results and args are the same kind
+			2) Predicate
+				Returns a boolean
+			3) Function
+				Args and return differ
+			4) Supplier
+				No args, returns a value
+			5) Consumer
+				any args, returns nothing
+		A Stream:
+			supplier -> getsNext -> modified -> consumer pops off
+		
 	Item 45: Use streams judiciously
 		Streams are good, but cause serializable issues and are counter-intuitive if used often
+			.filter- passes only true values of lambda
+			.map- Transforms input to lambda
+			.peek- fetches input from stream, passing element
+			!!MUST BE SAME TYPE!!
+			Python has map function, is the worst anti-pattern
+				Could use function better
+		Use on:
+			Pipelines, Has source of data with operations on all of them and ending operations, use streams otherwise avoid
+			!!Beware executed lazily!!
+			Only called when collector needs it to
+			Sequential, fluent(chain of dots)
 	Item 46: Prefer side-effect-free functions and streams
 		Side-effects cause coupling, which is bad
 	Item 47: Prefer collection to stream as a return type
 		Collections have better support for returning
+		Allows true streams to fully convey their contents into collectors instead
+		
 	Item 48: Use caution when makings streams paralell
 		Paralellism is hard to support with java
+		Order of reaching collector is not defined
+		Issue of multithreading...
+		.iterate and .limit will not work well
+		ArrayList, HashMap, HashSet, Arrays, int and long will work fine
+			Because non-indexed
+		Works best if termination of operation is reduction
+			Basically a sum
+			Accumulator keeps mid-steps, Reductor has no history
+			
+		
 	Item 49: Check parameters for validity
 		Check parameters for vailidity, preconditions, postconditions and variance
 			Program defensively
