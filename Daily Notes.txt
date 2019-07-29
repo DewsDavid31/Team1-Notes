@@ -715,4 +715,59 @@ July 18 2019:
 		.setAccessible(true) allows mutation
 			!!Allows private final integers to be changeable unless delcared before runtime by optimization!!
 			Because literals are replaced by assembler's substitution
+
+July 29 2019:
+	Checked exceptions- throwing an error that is undoable
+				Require client to recover
+	Runtime exceptions- recovery from exception
+				Require programmer to recover
+	Avoid unecessary use of checked exceptions
+		use check and act race conditions
+			validate usage by using if()
+				!!Beware that multithreaded can race case!!
+	Regular Expressions:
+		Most useful for matching patterns to text etc.
+		Used for matching filenames
+			ex: /*
+			Called globbing
+		Python requires literal strings to start with r'str'
+		Very terse, unreadable, write-only and complex as hell
+			Python uses import re
+		.search(arg1,arg2)
+			returns object of where and if matched
+			returns none otherwise
+		special chars
+		Always greedy right to left on each expression(matches as much as possible)
+			. - matches any one char
+			^ - following matches beginning of str
+			$ - before matches end of str
+			Quantifiers: 0+ etc
+			* - 0+ of anything before
+			+ - 1+ of anything before
+			Ranges:
+			(a,b) - anywhere from a to b of before inclusive
+			(ab?) - optionally a or b of before
+			a? - optionally a
+			[a-b] - mathching any char from index a to b inclusive
+				can do | by just [abc]
+				^ causes NOT inside []
+			[] - considers itself a group of regex that can be modified
+			modifiers:
+			? - if added at end of op, makes match lazy(least amount of match)
+			/ - escapes special character after
+			bool:
+			| - does or on matches
+			& - does and on matches
+			back-references:
+			() - captures a match for later
+				referenced by \index
 			
+		official terms:
+				ranges - {} + *
+				anchors - ^$
+	Webcrawlers- non-interactive page loading
+			Gnuwget and Curl- both take url's by regex and call them
+			Replican - made by beaty(joke on bladerunner's rachel), made of all regex, 57 command line args
+				needs a parser for its args lol
+				can filter save, reject, accept, refuse for each type
+				godawful sillyness

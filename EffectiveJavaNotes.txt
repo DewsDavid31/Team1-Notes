@@ -618,6 +618,9 @@ item 68: Adhere to generally accepted naming conventions
 
 
 Chapter 10: exceptions
+	OS cannot be as clean, but should be handled by programmer...
+	Many languages do not have checked exceptions
+	
   item 69: use exceptions only for exceptional conditions
      dont use them to control flow, it slows jvm and makes code brittle
     can mask bugs, maintenance awful
