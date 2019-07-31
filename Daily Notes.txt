@@ -770,4 +770,7 @@ July 29 2019:
 			Replican - made by beaty(joke on bladerunner's rachel), made of all regex, 57 command line args
 				needs a parser for its args lol
 				can filter save, reject, accept, refuse for each type
-				godawful sillyness
+
+
+July 31 2019
+	We DID IT
